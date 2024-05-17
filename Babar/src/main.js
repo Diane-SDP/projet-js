@@ -1,8 +1,8 @@
 import { Game } from "phaser";
-// import { Preloader } from "./preloader";
-// import { GameOverScene } from "./scenes/GameOverScene";
+import { Preloader } from "./preloader";
+import { GameOverScene } from "./scenes/GameOverScene";
 // import { HudScene } from "./scenes/HudScene";
-// import { MainScene } from "./scenes/MainScene";
+import { MainScene } from "./scenes/MainScene";
 // import { MenuScene } from "./scenes/MenuScene";
 // import { SplashScene } from "./scenes/SplashScene";
 
