@@ -4,8 +4,8 @@ import {MainScene} from "./scenes/mainscene"
 function runGame() {
     var config = {
         type: Phaser.AUTO,
-        width: 800,
-        height: 600,
+        width: 960,
+        height: 540,
         scene: [MainScene]
     }
     var game = new Phaser.Game(config);
