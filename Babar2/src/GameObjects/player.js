@@ -2,18 +2,21 @@ import { GameObjects,Physics } from "phaser";
 
 export class Player extends Physics.Arcade.Image {
     state = "waiting";
-    Dash = true
+    CanDash = true
+    CanAttack = true
     velocity = 5;
     size = 50;
     MazeX = 0;
     MazeY = 0;
+    MazeMaxX = 4;
+    MazeMaxY = 4;
+    Direction = []
+    // Maze = []
     constructor({scene}) {
         super(scene, 200, 100, "player");
         this.scene = scene;
+        this.Maze = []
         this.scene.add.existing(this);
-    }
-    start() {
-        this.state = "start";
     }
     move(direction) {
         for(var i = 0 ; i < direction.length;i++){
@@ -54,24 +57,44 @@ export class Player extends Physics.Arcade.Image {
     SwitchRoom(direction){
         switch (direction) {
             case "up":
-                this.y = 540-this.size
-                this.x = 960/2+this.size
+                if(this.MazeY != 0){
+                    if(this.Maze[this.MazeY-1][this.MazeX] == "X"){
+                        this.y = 540-this.size
+                        this.MazeY--;
+                    }
+                }
                 break;
             case "down":
-                this.y = 0+this.size
-                this.x = 960/2+this.size
+                if(this.MazeY != this.MazeMaxY-1){
+                    if(this.Maze[this.MazeY+1][this.MazeX] == "X"){
+                        this.y = 0+this.size
+                        this.MazeY++;
+                    }
+
+                }
                 break;
             case "left":
-                this.y = 540/2+this.size
-                this.x = 0+this.size
-
+                if(this.MazeX != 0){
+                    if(this.Maze[this.MazeY][this.MazeX-1] == "X"){
+                        this.x = 960-this.size
+                        this.MazeX--;
+                    }
+                }
                 break;
             case "right":
-                this.y = 540/2+this.size
-                this.x = 960-this.size
+                if(this.MazeX != this.MazeMaxX-1){
+                    if(this.Maze[this.MazeY][this.MazeX+1] == "X"){
+
+                        this.x = 0+this.size
+                        this.MazeX++;
+                    }
+                }
                 break;
             default:
                 break;
         }
+    }
+    Attack(mouseX,mouseY){
+        console.log(mouseX,mouseY)
     }
 }
