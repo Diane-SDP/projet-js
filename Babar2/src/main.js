@@ -1,22 +1,22 @@
+import {GameScene} from "./scenes/gamescene"
+import {MenuScene} from "./scenes/menuscene"
 import { Game } from "phaser";
-import {MainScene} from "./scenes/mainscene"
+import Phaser from 'phaser';
 
-function runGame() {
-    var config = {
-        type: Phaser.AUTO,
-        width: 960,
-        height: 540,
-        scene: [MainScene]
+
+var config = {
+    type: Phaser.AUTO,
+    width: 960,
+    height: 540,
+    scene: [
+        MenuScene,
+        GameScene
+    ],
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: false
+        }
     }
-    var game = new Phaser.Game(config);
 }
-
-window.onload = function () {
-    runGame();
-};
-
-
-
-function update ()
-{
-}
+new Game(config)

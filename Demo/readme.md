@@ -1,8 +1,8 @@
-# Phaser's Revenge
+# Memory Card Game
 
-Phaser's Revenge is an adaptation of the classic game Space Invaders.
+This is a simple memory card game. The goal is to match all the cards in the fewest number of moves.
 
-Your mission is to shoot the enemy ship and dodge its attacks to score as many points as possible in a short amount of time.
+Click on a card to reveal its symbol. Click on a second card to reveal its symbol. If the symbols match, the cards will remain face up. If the symbols do not match, the cards will be hidden again. Continue until all cards are matched.
 
 ## Instructions
 

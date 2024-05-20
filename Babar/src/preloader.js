@@ -1,9 +1,9 @@
 // Class to preload all the assets
 // Remember you can load this assets in another scene if you need it
 export class Preloader extends Phaser.Scene {
-    constructor() {
-        super({ key: "Preloader" });
-    }
+    // constructor() {
+    //     super({ key: "Preloader" });
+    // }
 
     preload() {
         // Load all the assets
@@ -36,18 +36,18 @@ export class Preloader extends Phaser.Scene {
     }
 
     create() {
-        // Create bitmap font and load it in cache
-        const config = {
-            image: 'knighthawks',
-            width: 31,
-            height: 25,
-            chars: Phaser.GameObjects.RetroFont.TEXT_SET6,
-            charsPerRow: 10,
-            spacing: { x: 1, y: 1 }
-        };
-        this.cache.bitmapFont.add('knighthawks', Phaser.GameObjects.RetroFont.Parse(this, config));
+        // // Create bitmap font and load it in cache
+        // const config = {
+        //     image: 'knighthawks',
+        //     width: 31,
+        //     height: 25,
+        //     chars: Phaser.GameObjects.RetroFont.TEXT_SET6,
+        //     charsPerRow: 10,
+        //     spacing: { x: 1, y: 1 }
+        // };
+        // this.cache.bitmapFont.add('knighthawks', Phaser.GameObjects.RetroFont.Parse(this, config));
 
         // When all the assets are loaded go to the next scene
-        this.scene.start("SplashScene");
+        // this.scene.start("SplashScene");
     }
 }

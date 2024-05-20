@@ -1,5 +1,5 @@
 {
-  "name": "template-vite",
+  "name": "card-memory",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^5.1.6"
+    "vite": "^5.2.0"
   },
   "dependencies": {
     "phaser": "^3.80.1"
