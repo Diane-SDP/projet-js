@@ -62,7 +62,7 @@ export class GameScene extends Scene {
         const height = 20;
         const tileSize = 50; 
         const generator = new LabyrinthGenerator(width, height);
-        const Maze = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur
+        const Maze = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur (taille : 10x10)
 
         // this.Maze = [
         //     ["X","X","O","X"],
@@ -78,6 +78,8 @@ export class GameScene extends Scene {
         this.physics.add.collider(this.player,this.bokoblin)
         this.player.UpdateHealth()
     }
+
+    
     update() {
         
         this.player.update();

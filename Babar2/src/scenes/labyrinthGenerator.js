@@ -9,10 +9,9 @@ export class LabyrinthGenerator {
     }
 
     generateLabyrinth() {
-        this.tracePath(0, 0);
+        this.tracePath(0, 0); // génère le labyrinthe
         this.labyrinth[9][9] = 0;
-        console.log("faisable ?", this.isResolvable())
-        while (!this.isResolvable()) {
+        while (!this.isResolvable()) { //le régénère si besoin
              this.labyrinth = Array.from({ length: this.height }, () => Array(this.width).fill(1));
              this.visited = Array.from({ length: this.height }, () => Array(this.width).fill(false));
              this.tracePath(0, 0);
@@ -20,7 +19,7 @@ export class LabyrinthGenerator {
         return this.labyrinth;
     }
 
-    tracePath(y, x) {
+    tracePath(y, x) { //creuse le labyrinthe, utilise la recherche en profondeur (DFS)
         this.visited[y][x] = true;
         this.labyrinth[y][x] = 0;
 
@@ -38,7 +37,7 @@ export class LabyrinthGenerator {
         }
     }
 
-    shouldDig(y, x) {
+    shouldDig(y, x) { // renvoie true si trop de mur à coté pour tracer le chemin, false sinon
         let neighborsDug = 0;
         if (this.isInside(y + 1, x) && this.labyrinth[y + 1][x] === 0) {
             neighborsDug++;
@@ -55,7 +54,7 @@ export class LabyrinthGenerator {
         return neighborsDug <= 1;
     }
 
-    shuffle(array) {
+    shuffle(array) { //mélange les directions
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
@@ -63,11 +62,11 @@ export class LabyrinthGenerator {
         return array;
     }
 
-    isInside(y, x) {
+    isInside(y, x) { // vérifie si a case(x,y) existe dans le labyrinthe
         return y >= 0 && x >= 0 && y < this.height && x < this.width;
     }
 
-    isResolvable() {
+    isResolvable() { // renvoie true si le labyronthe est faisable
         const stack = [[0, 0]];
         const visited = Array.from({ length: this.height }, () => Array(this.width).fill(false));
 
