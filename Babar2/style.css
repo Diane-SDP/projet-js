@@ -10,7 +10,12 @@ body {
     font-weight:400;
     font-weight:normal;
   }
-
+canvas {
+    display: block;
+    margin: auto;
+    margin-top: 5%;
+    
+}
 
 /* #app {
     width: 100%;

@@ -16,7 +16,7 @@ export class LabyrinthGenerator {
         this.tracePath(0, 0);
         this.labyrinth[9][9] = false;
         while (!this.isResolvable()) { //le régénère si besoin
-            this.labyrinth = Array.from({ length: height }, () => Array(width).fill(new Case()));
+            this.labyrinth = Array.from({ length: this.height }, () => Array(this.width).fill(new Case()));
             this.tracePath(0, 0);
         }
         return this.labyrinth;

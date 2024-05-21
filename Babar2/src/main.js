@@ -2,6 +2,7 @@ import {GameScene} from "./scenes/gamescene"
 import { Labyrinth } from "./scenes/labyrinth";
 import {MenuScene} from "./scenes/menuscene"
 import { Game } from "phaser";
+import { Credits } from "./scenes/creditscene";
 import Phaser from 'phaser';
 
 
@@ -10,6 +11,7 @@ var config = {
     width: 960,
     height: 540,
     scene: [
+        Credits,
         MenuScene,
         GameScene
     ],
