@@ -22,7 +22,7 @@ export class Labyrinth extends Phaser.Scene {
 
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
-                if (labyrinth[y][x] == 1) {
+                if (labyrinth[y][x].wall) {
                     this.add.image(x * tileSize, y * tileSize, 'wall').setOrigin(0);
                 }
             }

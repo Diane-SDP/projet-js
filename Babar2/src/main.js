@@ -10,7 +10,7 @@ var config = {
     width: 960,
     height: 540,
     scene: [
-        Labyrinth,
+        
         MenuScene,
         GameScene
     ],
