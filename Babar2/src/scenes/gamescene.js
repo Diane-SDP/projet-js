@@ -7,8 +7,8 @@ export class GameScene extends Scene {
     player = null;
     bokoblin = null;
     Maze = []
-    MazeHeight = 4;
-    MazeWidth = 4;
+    MazeHeight = 10;
+    MazeWidth = 10;
     constructor() {
         super('game');
     }
@@ -28,6 +28,7 @@ export class GameScene extends Scene {
 
         this.player = new Player({ scene: this });
         this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
+        
         // this.bokoblin.setScale(0.75)
 
 
@@ -36,7 +37,8 @@ export class GameScene extends Scene {
             'Z': Phaser.Input.Keyboard.KeyCodes.Z,
             'Q': Phaser.Input.Keyboard.KeyCodes.Q,
             'S': Phaser.Input.Keyboard.KeyCodes.S,
-            'D': Phaser.Input.Keyboard.KeyCodes.D
+            'D': Phaser.Input.Keyboard.KeyCodes.D,
+            'TAB' : Phaser.Input.Keyboard.KeyCodes.TAB
         });
         this.input.on('pointerdown', (pointer) => {
             if (pointer.button === 0 && this.player.CanAttack) {
@@ -58,12 +60,12 @@ export class GameScene extends Scene {
 
         this.input.mouse.disableContextMenu();
 
-        const width = 20;
-        const height = 20;
+        const width = 10;
+        const height = 10;
         const tileSize = 50; 
         const generator = new LabyrinthGenerator(width, height);
         const Maze = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur (taille : 10x10)
-
+        console.log(Maze)
         // this.Maze = [
         //     ["X","X","O","X"],
         //     ["O","X","O","X"],
@@ -71,15 +73,21 @@ export class GameScene extends Scene {
         //     ["X","X","X","X"]
         // ]
 
-
         this.player.Maze = Maze
+        // FillMonster()
         this.player.bokoblin = this.bokoblin
 
         this.physics.add.collider(this.player,this.bokoblin)
         this.player.UpdateHealth()
     }
 
-    
+    FillMonster(){
+        for(var i = 0 ; i < this.Maze.length;i++){
+            for(var i = 0 ; i < this.Maze.length;i++){
+            
+            }
+        }
+    }
     update() {
         
         this.player.update();
@@ -97,10 +105,58 @@ export class GameScene extends Scene {
         if (this.cursors.left.isDown || this.keys.Q.isDown) {
             direction.push("left");
         }
-
+        if (this.keys.TAB.isDown) {
+            console.log("TAB")
+            this.displayMap();
+        } else {
+            if (this.mapGraphics != null) {
+                this.hideMap()
+            }
+        }
         this.player.move(direction)
         this.bokoblin.Move(this.player)
         
+    }
+
+    hideMap() {
+        this.mapGraphics.clear()
+    }
+
+    displayMap() {
+        const tileSize = 40;
+        const mapWidth = this.MazeWidth * tileSize;
+        const mapHeight = this.MazeHeight * tileSize;
+
+        if (this.mapGraphics) {
+            this.mapGraphics.clear();
+        } else {
+            this.mapGraphics = this.add.graphics();
+        }
+
+        this.mapGraphics.fillStyle(0x000000, 0.75);
+        this.mapGraphics.fillRect(
+            (this.cameras.main.width - mapWidth) / 2,
+            (this.cameras.main.height - mapHeight) / 2,
+            mapWidth,
+            mapHeight
+        );
+
+        for (let y = 0; y < this.MazeHeight; y++) {
+            for (let x = 0; x < this.MazeWidth; x++) {
+                if (this.player.Maze[y][x].wall === true) {
+                    this.mapGraphics.fillStyle(0xff0000, 1); 
+                } else {
+                    this.mapGraphics.fillStyle(0x000000, 1);
+                }
+                const rectX = (this.cameras.main.width - mapWidth) / 2 + x * tileSize;
+                const rectY = (this.cameras.main.height - mapHeight) / 2 + y * tileSize;
+                this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
+            }
+        }
+        this.mapGraphics.fillStyle(0x00ff00, 1); 
+        const rectX = (this.cameras.main.width - mapWidth) / 2 + this.player.MazeX * tileSize;
+        const rectY = (this.cameras.main.height - mapHeight) / 2 + this.player.MazeY * tileSize;
+        this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
     }
 
     

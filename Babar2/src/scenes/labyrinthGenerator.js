@@ -13,9 +13,11 @@ export class LabyrinthGenerator {
     generateLabyrinth() {
         this.tracePath(0, 0); // génère le labyrinthe
         this.labyrinth[9][9].wall = false;
+        console.log(this.isResolvable())
         while (!this.isResolvable()) { //le régénère si besoin
-            this.labyrinth = Array.from({ length: height }, () => Array.from({ length: width }, () => new Case()));
+            this.labyrinth = Array.from({ length: this.height }, () => Array.from({ length: this.width }, () => new Case()));
             this.tracePath(0, 0);
+            console.log(this.isResolvable())
         }
         // this.labyrinth[0][9].wall = true;
         return this.labyrinth;

@@ -7,8 +7,8 @@ export class Player extends Physics.Arcade.Sprite {
     size = 50;
     MazeX = 0;
     MazeY = 0;
-    MazeMaxX = 4;
-    MazeMaxY = 4;
+    MazeMaxX = 10;
+    MazeMaxY = 10;
     HealthBar = []
     Direction = []
     constructor({scene}) {
@@ -70,7 +70,7 @@ export class Player extends Physics.Arcade.Sprite {
         switch (direction) {
             case "up":
                 if(this.MazeY != 0){
-                    if(this.Maze[this.MazeY-1][this.MazeX] == 0){
+                    if(this.Maze[this.MazeY-1][this.MazeX].wall == false){
                         this.y = 540-this.size
                         this.MazeY--;
                     }
@@ -78,7 +78,7 @@ export class Player extends Physics.Arcade.Sprite {
                 break;
             case "down":
                 if(this.MazeY != this.MazeMaxY-1){
-                    if(this.Maze[this.MazeY+1][this.MazeX] == 0){
+                    if(this.Maze[this.MazeY+1][this.MazeX].wall == false){
                         this.y = 0+this.size
                         this.MazeY++;
                     }
@@ -87,7 +87,7 @@ export class Player extends Physics.Arcade.Sprite {
                 break;
             case "left":
                 if(this.MazeX != 0){
-                    if(this.Maze[this.MazeY][this.MazeX-1] == 0){
+                    if(this.Maze[this.MazeY][this.MazeX-1].wall == false){
                         this.x = 960-this.size
                         this.MazeX--;
                     }
@@ -95,7 +95,7 @@ export class Player extends Physics.Arcade.Sprite {
                 break;
             case "right":
                 if(this.MazeX != this.MazeMaxX-1){
-                    if(this.Maze[this.MazeY][this.MazeX+1] == 0){
+                    if(this.Maze[this.MazeY][this.MazeX+1].wall == false){
 
                         this.x = 0+this.size
                         this.MazeX++;
