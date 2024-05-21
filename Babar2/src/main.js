@@ -11,7 +11,6 @@ var config = {
     width: 960,
     height: 540,
     scene: [
-        Credits,
         MenuScene,
         GameScene
     ],

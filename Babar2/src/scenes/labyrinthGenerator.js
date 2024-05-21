@@ -1,24 +1,25 @@
 import { Case } from "./Case";
 
+
 export class LabyrinthGenerator {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.labyrinth = Array.from({ length: height }, () => Array(width).fill(new Case()));
-
-        // this.visited = Array.from({ length: height }, () => Array(width).fill(false));
+        this.labyrinth = Array.from({ length: height }, () => Array.from({ length: width }, () => new Case()));
         this.directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
         this.path = [];
     }
 
     generateLabyrinth() {
-
-        this.tracePath(0, 0);
-        this.labyrinth[9][9] = false;
+        this.tracePath(0, 0); // génère le labyrinthe
+        this.labyrinth[9][9].wall = false;
+        console.log(this.isResolvable())
         while (!this.isResolvable()) { //le régénère si besoin
-            this.labyrinth = Array.from({ length: this.height }, () => Array(this.width).fill(new Case()));
+            this.labyrinth = Array.from({ length: this.height }, () => Array.from({ length: this.width }, () => new Case()));
             this.tracePath(0, 0);
+            console.log(this.isResolvable())
         }
+        // this.labyrinth[0][9].wall = true;
         return this.labyrinth;
     }
 
@@ -42,16 +43,16 @@ export class LabyrinthGenerator {
 
     shouldDig(y, x) { // renvoie true si trop de mur à coté pour tracer le chemin, false sinon
         let neighborsDug = 0;
-        if (this.isInside(y + 1, x) && this.labyrinth[y + 1][x] === false) {
+        if (this.isInside(y + 1, x) && this.labyrinth[y + 1][x].wall === false) {
             neighborsDug++;
         }
-        if (this.isInside(y - 1, x) && this.labyrinth[y - 1][x] === false) {
+        if (this.isInside(y - 1, x) && this.labyrinth[y - 1][x].wall === false) {
             neighborsDug++;
         }
-        if (this.isInside(y, x + 1) && this.labyrinth[y][x + 1] === false) {
+        if (this.isInside(y, x + 1) && this.labyrinth[y][x + 1].wall === false) {
             neighborsDug++;
         }
-        if (this.isInside(y, x - 1) && this.labyrinth[y][x - 1] === false) {
+        if (this.isInside(y, x - 1) && this.labyrinth[y][x - 1].wall === false) {
             neighborsDug++;
         }
         return neighborsDug <= 1;
@@ -84,7 +85,7 @@ export class LabyrinthGenerator {
                 const newY = y + dy;
                 const newX = x + dx;
 
-                if (this.isInside(newY, newX) && !visited[newY][newX] && this.labyrinth[newY][newX] === false) {
+                if (this.isInside(newY, newX) && !visited[newY][newX] && this.labyrinth[newY][newX].wall === false) {
                     stack.push([newY, newX]);
                 }
             }

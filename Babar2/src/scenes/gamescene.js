@@ -60,12 +60,12 @@ export class GameScene extends Scene {
 
         this.input.mouse.disableContextMenu();
 
-        const width = 20;
-        const height = 20;
+        const width = 10;
+        const height = 10;
         const tileSize = 50; 
         const generator = new LabyrinthGenerator(width, height);
         const Maze = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur (taille : 10x10)
-        
+        console.log(Maze)
         // this.Maze = [
         //     ["X","X","O","X"],
         //     ["O","X","O","X"],
@@ -74,13 +74,20 @@ export class GameScene extends Scene {
         // ]
 
         this.player.Maze = Maze
+        // FillMonster()
         this.player.bokoblin = this.bokoblin
 
         this.physics.add.collider(this.player,this.bokoblin)
         this.player.UpdateHealth()
     }
 
-
+    FillMonster(){
+        for(var i = 0 ; i < this.Maze.length;i++){
+            for(var i = 0 ; i < this.Maze.length;i++){
+            
+            }
+        }
+    }
     update() {
         
         this.player.update();
@@ -136,7 +143,7 @@ export class GameScene extends Scene {
 
         for (let y = 0; y < this.MazeHeight; y++) {
             for (let x = 0; x < this.MazeWidth; x++) {
-                if (this.player.Maze[y][x] === 1) {
+                if (this.player.Maze[y][x].wall === true) {
                     this.mapGraphics.fillStyle(0xff0000, 1); 
                 } else {
                     this.mapGraphics.fillStyle(0x000000, 1);

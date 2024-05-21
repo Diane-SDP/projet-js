@@ -11,8 +11,8 @@ export class Labyrinth extends Phaser.Scene {
     }
 
     create() {
-        const width = 20;
-        const height = 20;
+        const width = 10;
+        const height = 10;
         const tileSize = 50; 
         const generator = new LabyrinthGenerator(width, height);
         console.log("Laby 1")
@@ -22,7 +22,7 @@ export class Labyrinth extends Phaser.Scene {
 
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
-                if (labyrinth[y][x] == 1) {
+                if (labyrinth[y][x].wall) {
                     this.add.image(x * tileSize, y * tileSize, 'wall').setOrigin(0);
                 }
             }
