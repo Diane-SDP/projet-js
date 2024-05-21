@@ -7,8 +7,8 @@ export class Player extends Physics.Arcade.Sprite {
     size = 50;
     MazeX = 0;
     MazeY = 0;
-    MazeMaxX = 4;
-    MazeMaxY = 4;
+    MazeMaxX = 10;
+    MazeMaxY = 10;
     HealthBar = []
     Direction = []
     constructor({scene}) {
