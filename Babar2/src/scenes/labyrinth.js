@@ -11,8 +11,8 @@ export class Labyrinth extends Phaser.Scene {
     }
 
     create() {
-        const width = 20;
-        const height = 20;
+        const width = 10;
+        const height = 10;
         const tileSize = 50; 
         const generator = new LabyrinthGenerator(width, height);
         const labyrinth = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur

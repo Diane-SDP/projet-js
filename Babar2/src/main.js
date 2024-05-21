@@ -1,4 +1,5 @@
 import {GameScene} from "./scenes/gamescene"
+import { Labyrinth } from "./scenes/labyrinth";
 import {MenuScene} from "./scenes/menuscene"
 import { Game } from "phaser";
 import Phaser from 'phaser';
@@ -9,6 +10,7 @@ var config = {
     width: 960,
     height: 540,
     scene: [
+        Labyrinth,
         MenuScene,
         GameScene
     ],

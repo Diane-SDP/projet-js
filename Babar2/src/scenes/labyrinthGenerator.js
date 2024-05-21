@@ -10,6 +10,13 @@ export class LabyrinthGenerator {
 
     generateLabyrinth() {
         this.tracePath(0, 0);
+        this.labyrinth[9][9] = 0;
+        console.log("faisable ?", this.isResolvable())
+        while (!this.isResolvable()) {
+             this.labyrinth = Array.from({ length: this.height }, () => Array(this.width).fill(1));
+             this.visited = Array.from({ length: this.height }, () => Array(this.width).fill(false));
+             this.tracePath(0, 0);
+        }
         return this.labyrinth;
     }
 
@@ -58,5 +65,28 @@ export class LabyrinthGenerator {
 
     isInside(y, x) {
         return y >= 0 && x >= 0 && y < this.height && x < this.width;
+    }
+
+    isResolvable() {
+        const stack = [[0, 0]];
+        const visited = Array.from({ length: this.height }, () => Array(this.width).fill(false));
+
+        while (stack.length > 0) {
+            const [y, x] = stack.pop();
+            if (y === 9 && x === 9) {
+                return true;
+            }
+            visited[y][x] = true;
+
+            for (let [dy, dx] of this.directions) {
+                const newY = y + dy;
+                const newX = x + dx;
+
+                if (this.isInside(newY, newX) && !visited[newY][newX] && this.labyrinth[newY][newX] === 0) {
+                    stack.push([newY, newX]);
+                }
+            }
+        }
+        return false;
     }
 }
