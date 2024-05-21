@@ -1,53 +1,43 @@
-// Class to preload all the assets
-// Remember you can load this assets in another scene if you need it
-export class Preloader extends Phaser.Scene {
-    constructor() {
-        super({ key: "Preloader" });
-    }
+import Phaser from 'phaser';
 
-    preload() {
-        // Load all the assets
-        this.load.setPath("assets");
-        this.load.image("logo", "logo.png");
-        this.load.image("floor");
-        this.load.image("background", "background.png");
-
-        this.load.image("player", "player/player.png");
-        this.load.atlas("propulsion-fire", "player/propulsion/propulsion-fire.png", "player/propulsion/propulsion-fire_atlas.json");
-        this.load.animation("propulsion-fire-anim", "player/propulsion/propulsion-fire_anim.json");
-
-        // Bullets
-        this.load.image("bullet", "player/bullet.png");
-        this.load.image("flares")
-
-        // Enemies
-        this.load.atlas("enemy-blue", "enemies/enemy-blue/enemy-blue.png", "enemies/enemy-blue/enemy-blue_atlas.json");
-        this.load.animation("enemy-blue-anim", "enemies/enemy-blue/enemy-blue_anim.json");
-        this.load.image("enemy-bullet", "enemies/enemy-bullet.png");
-
-        // Fonts
-        this.load.bitmapFont("pixelfont", "fonts/pixelfont.png", "fonts/pixelfont.xml");
-        this.load.image("knighthawks", "fonts/knight3.png");
-
-        // Event to update the loading bar
-        this.load.on("progress", (progress) => {
-            console.log("Loading: " + Math.round(progress * 100) + "%");
+export class Preloader extends Phaser.Scene
+{
+    constructor()
+    {
+        super({
+            key: 'Preloader'
         });
     }
 
-    create() {
-        // Create bitmap font and load it in cache
-        const config = {
-            image: 'knighthawks',
-            width: 31,
-            height: 25,
-            chars: Phaser.GameObjects.RetroFont.TEXT_SET6,
-            charsPerRow: 10,
-            spacing: { x: 1, y: 1 }
-        };
-        this.cache.bitmapFont.add('knighthawks', Phaser.GameObjects.RetroFont.Parse(this, config));
+    preload ()
+    {
+        this.load.setPath("assets/");
 
-        // When all the assets are loaded go to the next scene
-        this.scene.start("SplashScene");
+        this.load.image("volume-icon", "ui/volume-icon.png");
+        this.load.image("volume-icon_off", "ui/volume-icon_off.png");
+
+        this.load.audio("theme-song", "audio/fat-caps-audionatix.mp3");
+        this.load.audio("whoosh", "audio/whoosh.mp3");
+        this.load.audio("card-flip", "audio/card-flip.mp3");
+        this.load.audio("card-match", "audio/card-match.mp3");
+        this.load.audio("card-mismatch", "audio/card-mismatch.mp3");
+        this.load.audio("card-slide", "audio/card-slide.mp3");
+        this.load.audio("victory", "audio/victory.mp3");
+        this.load.image("background");
+        this.load.image("card-back", "cards/card-back.png");
+        this.load.image("card-0", "cards/card-0.png");
+        this.load.image("card-1", "cards/card-1.png");
+        this.load.image("card-2", "cards/card-2.png");
+        this.load.image("card-3", "cards/card-3.png");
+        this.load.image("card-4", "cards/card-4.png");
+        this.load.image("card-5", "cards/card-5.png");
+
+        this.load.image("heart", "ui/heart.png");
+
+    }
+
+    create ()
+    {
+        this.scene.start("Play");
     }
 }

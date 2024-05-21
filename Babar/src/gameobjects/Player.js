@@ -8,7 +8,7 @@ export class Player extends Physics.Arcade.Image {
     propulsion_fire = null;
     scene = null;
     bullets = null;
-
+    
     constructor({scene}) {
         super(scene, -190, 100, "player");
         this.scene = scene;
