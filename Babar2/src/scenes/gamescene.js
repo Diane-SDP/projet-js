@@ -84,6 +84,8 @@ export class GameScene extends Scene {
         this.physics.add.collider(this.player,this.bokoblin)
         this.player.UpdateHealth()
     }
+
+    
     update() {
         
         this.player.update();
