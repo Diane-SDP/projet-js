@@ -63,7 +63,13 @@ export class GameScene extends Scene {
         const tileSize = 50; 
         const generator = new LabyrinthGenerator(width, height);
         const Maze = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur
-
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                if (labyrinth[y][x].wall) {
+                    this.add.image(x * tileSize, y * tileSize, 'wall').setOrigin(0);
+                }
+            }
+        }
         // this.Maze = [
         //     ["X","X","O","X"],
         //     ["O","X","O","X"],
