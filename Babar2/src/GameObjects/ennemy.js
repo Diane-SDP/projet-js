@@ -28,7 +28,6 @@ export class Ennemy extends Physics.Arcade.Image {
     IsAttacked(amount) {
         // Logic for when the enemy is attacked
         this.Health-= amount;
-        console.log("ouch il lui reste "+this.Health)
         if (this.Health <=0){
             this.destroy();
             // this.disableBody(true,true)
@@ -51,7 +50,6 @@ export class Ennemy extends Physics.Arcade.Image {
         if(distance <= 200){
             
             if(this.CanAttack){
-                console.log("attaque !")    
                 this.Attack(Player)
             }
 
@@ -67,9 +65,7 @@ export class Ennemy extends Physics.Arcade.Image {
         const angleToPlayer = Phaser.Math.Angle.Between(this.x, this.y, Player.x, Player.y)
         
         const graphics = this.scene.add.graphics()
-        graphics.fillStyle(0xffa500, 1)
-    
-        // Draw the rectangle
+        graphics.fillStyle(0xffa500, 0.5)
         graphics.save()
         graphics.translateCanvas(this.x, this.y)
         graphics.rotateCanvas(angleToPlayer)
@@ -86,13 +82,12 @@ export class Ennemy extends Physics.Arcade.Image {
         setTimeout(() => {
             graphics.clear()
             
-            graphics.fillStyle(0xff0000, 1)
+            graphics.fillStyle(0xffa500, 1)
             graphics.save()
             graphics.translateCanvas(this.x, this.y)
             graphics.rotateCanvas(angleToPlayer)
             graphics.fillRect(0, -attackWidth / 2, attackHeight, attackWidth)
             this.scene.physics.add.overlap(attackZone, Player, () => {
-                console.log("touché ! ")
                 if(!Attacked){
                     Player.GetAttacked(1)
                     Attacked = true
@@ -111,7 +106,7 @@ export class Ennemy extends Physics.Arcade.Image {
                 }, 700);
             }, 100);
 
-        }, 200);
+        }, 350);
     }
 
 }

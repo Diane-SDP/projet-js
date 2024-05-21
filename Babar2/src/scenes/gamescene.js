@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { Scene } from "phaser";
 import { Player } from "../GameObjects/player";
+import { LabyrinthGenerator } from "./labyrinthGenerator";
 import { Ennemy } from "../GameObjects/ennemy";
 export class GameScene extends Scene {
     player = null;
@@ -56,15 +57,22 @@ export class GameScene extends Scene {
         });
 
         this.input.mouse.disableContextMenu();
-        this.Maze = [
-            ["X","X","O","X"],
-            ["O","X","O","X"],
-            ["O","X","O","X"],
-            ["X","X","X","X"]
-        ]
+
+        const width = 20;
+        const height = 20;
+        const tileSize = 50; 
+        const generator = new LabyrinthGenerator(width, height);
+        const Maze = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur
+
+        // this.Maze = [
+        //     ["X","X","O","X"],
+        //     ["O","X","O","X"],
+        //     ["O","X","O","X"],
+        //     ["X","X","X","X"]
+        // ]
 
 
-        this.player.Maze = this.Maze
+        this.player.Maze = Maze
         this.player.bokoblin = this.bokoblin
 
         this.physics.add.collider(this.player,this.bokoblin)
