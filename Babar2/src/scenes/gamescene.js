@@ -3,6 +3,8 @@ import { Scene } from "phaser";
 import { Player } from "../GameObjects/player";
 import { LabyrinthGenerator } from "./labyrinthGenerator";
 import { Ennemy } from "../GameObjects/ennemy";
+import {GameOverScene} from "./gameoverscene"
+
 export class GameScene extends Scene {
     player = null;
     bokoblin = null;
@@ -20,14 +22,18 @@ export class GameScene extends Scene {
         this.load.image("FullHeart",'./public/assets/HearthFull.png')
         this.load.image("MidHeart",'./public/assets/HearthMid.png')
         this.load.image("EmptyHeart",'./public/assets/HearthEmpty.png')
+        this.load.image("octorok",'./public/assets/OctoRok.png')
+        this.load.image("rock",'./public/assets/rock.png')
 
     }
+
+
 
     create() {
 
 
         this.player = new Player({ scene: this });
-        this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
+        // this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
         
         // this.bokoblin.setScale(0.75)
 
@@ -43,7 +49,7 @@ export class GameScene extends Scene {
         this.input.on('pointerdown', (pointer) => {
             if (pointer.button === 0 && this.player.CanAttack) {
                 this.player.CanAttack = false
-                this.player.Attack(this.input.mousePointer.downX,this.input.mousePointer.downY,this.bokoblin)
+                this.player.Attack(this.input.mousePointer.downX,this.input.mousePointer.downY,this.Maze[this.player.MazeX][this.player.MazeY].Ennemies)
             } else if (pointer.button === 2) {
                 if(this.player.CanDash == true){
                     this.player.CanDash = false
@@ -64,8 +70,8 @@ export class GameScene extends Scene {
         const height = 10;
         const tileSize = 50; 
         const generator = new LabyrinthGenerator(width, height);
-        const Maze = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur (taille : 10x10)
-        console.log(Maze)
+        this.Maze = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur (taille : 10x10)
+        console.log(this.Maze)
         // this.Maze = [
         //     ["X","X","O","X"],
         //     ["O","X","O","X"],
@@ -73,25 +79,42 @@ export class GameScene extends Scene {
         //     ["X","X","X","X"]
         // ]
 
-        this.player.Maze = Maze
-        // FillMonster()
+        this.player.Maze = this.Maze
+        this.FillMonster()
         this.player.bokoblin = this.bokoblin
-
-        this.physics.add.collider(this.player,this.bokoblin)
+        this.currentEnnemy =this.Maze[0][0].Ennemies
         this.player.UpdateHealth()
     }
 
     FillMonster(){
         for(var i = 0 ; i < this.Maze.length;i++){
-            for(var i = 0 ; i < this.Maze.length;i++){
-            
+            for(var j = 0 ; j < this.Maze.length;j++){
+                var nbEnnemy = Math.floor(Math.random() * 3)+1
+                for(var k = 0 ; k < nbEnnemy;k++){
+                    var WichMob = Math.floor(Math.random() * 100)
+                    if(WichMob < 30){
+                        var boko = new Ennemy({scene: this,type: "octorok"}).setScale(0.2)
+                        boko.Player = this.player
+                        this.Maze[i][j].Ennemies.push(boko)
+                    }else {
+                        var boko = new Ennemy({scene: this,type: "bokoblin"}).setScale(0.75)
+                        boko.Player = this.player
+                        this.Maze[i][j].Ennemies.push(boko)
+                    }
+                }
             }
         }
+        this.Maze[0][0].Ennemies = []
     }
-    update() {
-        
+    update() {    
+        for(var i = 0 ; i < this.Maze[this.player.MazeX][this.player.MazeY].Ennemies.length;i++){
+            if(this.Maze[this.player.MazeX][this.player.MazeY].Ennemies[i] !== undefined){
+                this.Maze[this.player.MazeX][this.player.MazeY].Ennemies[i].update(this.player)
+
+            }
+        } 
         this.player.update();
-        this.bokoblin.update();
+        // this.bokoblin.update();
         var direction = []
         if (this.cursors.up.isDown || this.keys.Z.isDown) {
             direction.push("up");
@@ -113,11 +136,32 @@ export class GameScene extends Scene {
                 this.hideMap()
             }
         }
+        if(this.player.Health <= 0){
+            this.scene.start("gameover")
+        }
         this.player.move(direction)
-        this.bokoblin.Move(this.player)
+        // this.bokoblin.Move(this.player)
         
     }
 
+    displayEnnemy(x,y){
+        for(var i = 0 ; i < this.Maze[x][y].Ennemies.length;i++){
+            if(this.Maze[x][y].Ennemies[i]!=undefined){
+                this.Maze[x][y].Ennemies[i].activate()
+            }
+        }
+    }
+    RemoveEnnemy(x,y){
+        for(var i = 0 ; i < this.Maze[x][y].Ennemies.length;i++){
+            if(this.Maze[x][y].Ennemies[i]!=undefined){
+                this.Maze[x][y].Ennemies[i].deactivate()
+                for(var j = 0 ; j < this.Maze[x][y].Ennemies[i].projectiles.length;j++){
+                    this.Maze[x][y].Ennemies[i].projectiles[j].destroy()
+                }
+                this.Maze[x][y].Ennemies[i].projectiles = []
+            }
+        }
+    }
     hideMap() {
         this.mapGraphics.clear()
     }

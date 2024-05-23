@@ -1,6 +1,7 @@
 import {GameScene} from "./scenes/gamescene"
 import { Labyrinth } from "./scenes/labyrinth";
 import {MenuScene} from "./scenes/menuscene"
+import {GameOverScene} from "./scenes/gameoverscene"
 import { Game } from "phaser";
 import Phaser from 'phaser';
 
@@ -11,7 +12,8 @@ var config = {
     height: 540,
     scene: [
         MenuScene,
-        GameScene
+        GameScene,
+        GameOverScene
     ],
     physics: {
         default: 'arcade',
