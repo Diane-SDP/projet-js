@@ -3,6 +3,7 @@ import { Labyrinth } from "./scenes/labyrinth";
 import {MenuScene} from "./scenes/menuscene"
 import {GameOverScene} from "./scenes/gameoverscene"
 import { Game } from "phaser";
+import { Credits } from "./scenes/creditscene";
 import Phaser from 'phaser';
 
 
