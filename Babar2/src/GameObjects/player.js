@@ -5,7 +5,7 @@ import {GameOverScene} from "../scenes/gameoverscene"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 30;
+    velocity = 5;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -14,6 +14,8 @@ export class Player extends Physics.Arcade.Sprite {
     HealthBar = []
     Direction = []
     key = null
+    oldDirection = ""
+    actualroom =""
     constructor({scene}) {
 
         super(scene, 200, 100, "player");
@@ -38,32 +40,55 @@ export class Player extends Physics.Arcade.Sprite {
     
 
     move(direction) {
+
         for(var i = 0 ; i < direction.length;i++){
+            console.log(direction[i])
             switch (direction[i]) {
+                
                 case "up":
+                    this.oldDirection = direction
                     if (this.y > 0 +this.size){
-                        this.y -= this.velocity;
+                        if(this.actualroom == "water"){
+                            this.y -= this.velocity/2;
+                        }else {
+                            this.y -= this.velocity;
+                        }
                     }else {
                         this.SwitchRoom(direction[i])
                     }
                     break;
                 case "down":
+                    this.oldDirection = direction
                     if (this.y < 540 -this.size){
-                        this.y += this.velocity;
+                        if(this.actualroom == "water"){
+                            this.y += this.velocity/2;
+                        }else {
+                            this.y += this.velocity;
+                        }
                     }else {
                         this.SwitchRoom(direction[i])
                     }
                     break;
                 case "left":
+                    this.oldDirection = direction
                     if (this.x > 0 +this.size){
-                        this.x-=this.velocity
+                        if(this.actualroom == "water"){
+                            this.x -= this.velocity/2;
+                        }else {
+                            this.x -= this.velocity;
+                        }
                     }else {
                         this.SwitchRoom(direction[i])
                     }
                     break;
                 case "right":
+                    this.oldDirection  = direction
                     if ( this.x < 960 -this.size){
-                        this.x+=this.velocity
+                        if(this.actualroom == "water"){
+                            this.x += this.velocity/2;
+                        }else {
+                            this.x += this.velocity;
+                        }
                     }else {
                         this.SwitchRoom(direction[i])
                         
@@ -73,6 +98,29 @@ export class Player extends Physics.Arcade.Sprite {
                     break;
             }
         }
+        
+        if(this.Maze[this.MazeY][this.MazeX].special == "ice"){
+            if(direction.length == 0 ){
+                this.move(this.oldDirection)
+            }
+        }else if (this.Maze[this.MazeY][this.MazeX].special == "wind"){
+            switch(this.Maze[this.MazeY][this.MazeX].wind){
+                case 1:
+                    this.x +=1
+                    break;
+                case 2:
+                    this.x -=1
+                    break;
+                case 3:
+                    this.y -=1
+                    break;
+                case 0 :
+                    this.y +=1
+                    break;
+            }
+
+        }
+        
         if(this.Maze[this.MazeY][this.MazeX].special == "key"){
             if(this.x > 960/2-20 && this.x < 960/2+20 && this.y > 540/2-20 && this.y < 540/2+20){
                 this.key.destroy();
@@ -93,6 +141,7 @@ export class Player extends Physics.Arcade.Sprite {
                         this.scene.RemoveEnnemy(this.MazeX,this.MazeY)
                         this.MazeY--;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
+                        this.actualroom = this.Maze[this.MazeY][this.MazeX].special
                         this.SpecialRoom()
                     }
                 }
@@ -105,6 +154,8 @@ export class Player extends Physics.Arcade.Sprite {
 
                         this.MazeY++;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
+                        this.actualroom = this.Maze[this.MazeY][this.MazeX].special
+
                         this.SpecialRoom()
 
                     }
@@ -119,6 +170,8 @@ export class Player extends Physics.Arcade.Sprite {
 
                         this.MazeX--;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
+                        this.actualroom = this.Maze[this.MazeY][this.MazeX].special
+
                         this.SpecialRoom()
                     }
                 }
@@ -132,6 +185,8 @@ export class Player extends Physics.Arcade.Sprite {
                         this.scene.RemoveEnnemy(this.MazeX,this.MazeY)
                         this.MazeX++;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
+                        this.actualroom = this.Maze[this.MazeY][this.MazeX].special
+
                         this.SpecialRoom()
                     }
                 }
