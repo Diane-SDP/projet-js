@@ -5,6 +5,7 @@ import { LabyrinthGenerator } from "./labyrinthGenerator";
 import { Ennemy } from "../GameObjects/ennemy";
 import {GameOverScene} from "./gameoverscene"
 
+import {global} from "../main"
 export class GameScene extends Scene {
     player = null
     bokoblin = null
@@ -152,7 +153,7 @@ export class GameScene extends Scene {
         this.Maze[0][0].Ennemies = []
     }
     
-    update() {    
+    update() {   
         for(var i = 0 ; i < this.Maze[this.player.MazeX][this.player.MazeY].Ennemies.length;i++){
             if(this.Maze[this.player.MazeX][this.player.MazeY].Ennemies[i] !== undefined){
                 this.Maze[this.player.MazeX][this.player.MazeY].Ennemies[i].update(this.player)
@@ -213,6 +214,7 @@ export class GameScene extends Scene {
     }
 
     displayMap() {
+        
         const tileSize = 40;
         const mapWidth = this.MazeWidth * tileSize;
         const mapHeight = this.MazeHeight * tileSize;

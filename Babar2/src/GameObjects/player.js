@@ -1,11 +1,12 @@
 import { GameObjects,Physics } from "phaser";
 import {GameOverScene} from "../scenes/gameoverscene"
+import {global} from "../main"
 
 
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 10;
+    velocity = 30;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -44,7 +45,6 @@ export class Player extends Physics.Arcade.Sprite {
     move(direction) {
 
         for(var i = 0 ; i < direction.length;i++){
-            console.log(direction[i])
             switch (direction[i]) {
                 
                 case "up":
@@ -219,7 +219,6 @@ export class Player extends Physics.Arcade.Sprite {
                 console.log("key") 
                 this.key = this.scene.add.image(960/2, 540/2, "key").setOrigin(0.5, 0.5).setScale(0.08)                
                 break;
-            
         }
     }
 
@@ -231,9 +230,6 @@ export class Player extends Physics.Arcade.Sprite {
                 break;
             case "spear":
                 this.AttackSpear(mouseX,mouseY,ennemies)
-                break;
-
-            default:
                 break;
         }
     }
@@ -259,7 +255,7 @@ export class Player extends Physics.Arcade.Sprite {
                 if (isWithinDistance && isWithinWidth && isWithinArc) {
                     ennemy[i].IsAttacked(this.AttackDamage);
                     if(ennemy[i].Health <= 0){
-                        console.log("il est mort")
+                        console.log(this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
                         this.scene.Maze[this.MazeX][this.MazeY].checkEnnemies()
@@ -296,6 +292,12 @@ export class Player extends Physics.Arcade.Sprite {
                 if (distanceToEnemy <= attackRadius+20 && isWithinArc) {
                     ennemy[i].IsAttacked(this.AttackDamage)
                     if(ennemy[i].Health <= 0){
+                        switch(ennemy[i].type){
+                            case "bokoblin":
+                                global.coin += 3
+                            case "octorok":
+                                global.coin += 1
+                        }
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
                         this.scene.Maze[this.MazeY][this.MazeX].checkEnnemies()
