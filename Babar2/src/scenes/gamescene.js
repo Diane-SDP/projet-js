@@ -29,9 +29,18 @@ export class GameScene extends Scene {
     }
 
 
+    resetGame() {
+        this.player = null
+        this.bokoblin = null
+        this.Maze = []
+        this.MazeHeight = 10
+        this.MazeWidth = 10
+        this.mapGraphics = null
+    }
 
     create() {
 
+        this.resetGame()
 
         this.player = new Player({ scene: this });
         this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
@@ -85,10 +94,15 @@ export class GameScene extends Scene {
         this.player.bokoblin = this.bokoblin
         this.currentEnnemy =this.Maze[0][0].Ennemies
         this.player.UpdateHealth()
+        if (this.mapGraphics) {
+            this.mapGraphics.clear();
+        } else {
+            this.mapGraphics = this.add.graphics();
+        }
     }
 
     FillMonster(){
-        for(var i = 0 ; i < this.Maze.length;i++){
+        for(var i = 0 ; i < this.Maze.length;i++){  
             for(var j = 0 ; j < this.Maze.length;j++){
                 var nbEnnemy = Math.floor(Math.random() * 3)+1
                 for(var k = 0 ; k < nbEnnemy;k++){
@@ -195,6 +209,13 @@ export class GameScene extends Scene {
                 }
                 const rectX = (this.cameras.main.width - mapWidth) / 2 + x * tileSize;
                 const rectY = (this.cameras.main.height - mapHeight) / 2 + y * tileSize;
+                console.log("this.cameras.main.width : ", this.cameras.main.width)
+                console.log("this.cameras.main.height : ", this.cameras.main.height)
+                console.log("mapWidth : ", mapWidth)
+                console.log("mapHeight : ", mapHeight)
+                console.log("rectX : ", rectX)
+                console.log("rectY : ", rectY)
+                console.log("tilesize : ", tileSize)
                 this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
             }
         }
