@@ -25,16 +25,26 @@ export class GameScene extends Scene {
         this.load.image("octorok",'./public/assets/OctoRok.png')
         this.load.image("rock",'./public/assets/rock.png')
         this.load.image("key","./public/assets/key.png")
+        this.load.atlas('a-player', './public/assets/spriteSheets/player.png', './src/animations/spritePlayer.json');
 
     }
 
 
+    resetGame() {
+        this.player = null
+        this.bokoblin = null
+        this.Maze = []
+        this.MazeHeight = 10
+        this.MazeWidth = 10
+        this.mapGraphics = null
+    }
 
     create() {
 
+        this.resetGame()
 
         this.player = new Player({ scene: this });
-        // this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
+        this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
         
         // this.bokoblin.setScale(0.75)
 
@@ -85,10 +95,37 @@ export class GameScene extends Scene {
         this.player.bokoblin = this.bokoblin
         this.currentEnnemy =this.Maze[0][0].Ennemies
         this.player.UpdateHealth()
+        if (this.mapGraphics) {
+            this.mapGraphics.clear();
+        } else {
+            this.mapGraphics = this.add.graphics();
+        }
+
+    }
+
+    setVisitedCase(x, y) {
+        if (x < 0 || y < 0 || x >= this.MazeWidth || y >= this.MazeHeight) return;
+
+        this.Maze[y][x].visited = true;
+
+        const nextRooms = [
+            { x: x + 1, y: y },
+            { x: x - 1, y: y },
+            { x: x, y: y + 1 },
+            { x: x, y: y - 1 }
+        ];
+
+        nextRooms.forEach(room => {
+            if (room.x >= 0 && room.y >= 0 && room.x < this.MazeWidth && room.y < this.MazeHeight) {
+                if (!this.Maze[room.y][room.x].visited) {
+                    this.Maze[room.y][room.x].discovered = true;
+                }
+            }
+        });
     }
 
     FillMonster(){
-        for(var i = 0 ; i < this.Maze.length;i++){
+        for(var i = 0 ; i < this.Maze.length;i++){  
             for(var j = 0 ; j < this.Maze.length;j++){
                 console.log(this.Maze[i][j].special)
                 if (!this.Maze[i][j].wall && this.Maze[i][j].special === ""){
@@ -143,6 +180,7 @@ export class GameScene extends Scene {
 
         this.player.move(direction)
         // this.bokoblin.Move(this.player)
+        this.setVisitedCase(this.player.MazeX, this.player.MazeY)
         
     }
 
@@ -169,6 +207,45 @@ export class GameScene extends Scene {
     }
 
     displayMap() {
+        const tileSize = 40;
+        const mapWidth = this.MazeWidth * tileSize;
+        const mapHeight = this.MazeHeight * tileSize;
+
+        if (this.mapGraphics) {
+            this.mapGraphics.clear();
+        } else {
+            this.mapGraphics = this.add.graphics();
+        }
+
+        this.mapGraphics.fillStyle(0x000000, 1);
+        this.mapGraphics.fillRect(
+            (this.cameras.main.width - mapWidth) / 2,
+            (this.cameras.main.height - mapHeight) / 2,
+            mapWidth,
+            mapHeight
+        );
+
+        for (let y = 0; y < this.MazeHeight; y++) {
+            for (let x = 0; x < this.MazeWidth; x++) {
+                if (this.Maze[y][x].visited === true && this.Maze[y][x].wall === false) {
+                    this.mapGraphics.fillStyle(0xff0000, 1);
+                } else if (this.Maze[y][x].discovered === true && this.Maze[y][x].wall === false) {
+                    this.mapGraphics.fillStyle(0x880000, 1);
+                } else {
+                    this.mapGraphics.fillStyle(0x000000, 1);
+                }
+                const rectX = (this.cameras.main.width - mapWidth) / 2 + x * tileSize;
+                const rectY = (this.cameras.main.height - mapHeight) / 2 + y * tileSize;
+                this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
+            }
+        }
+        this.mapGraphics.fillStyle(0x00ff00, 1);
+        const rectX = (this.cameras.main.width - mapWidth) / 2 + this.player.MazeX * tileSize;
+        const rectY = (this.cameras.main.height - mapHeight) / 2 + this.player.MazeY * tileSize;
+        this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
+    }       
+
+    displayFullMap() {
         const tileSize = 40;
         const mapWidth = this.MazeWidth * tileSize;
         const mapHeight = this.MazeHeight * tileSize;

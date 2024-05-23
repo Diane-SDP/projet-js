@@ -1,0 +1,199 @@
+{
+    "size": [
+        120,
+        130
+    ],
+    "rowPreviewFrame": 4,
+    "rowPreviewOffset": [
+        0,
+        0
+    ],
+    "clips": [
+        {
+            "name": "up",
+            "frames": [
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69
+            ],
+            "loop": "onBeat",
+            "fps": 10,
+            "loopStart": 3,
+            "portraitOffset": [
+                0,
+                0
+            ],
+            "portraitSize": [
+                25,
+                25
+            ],
+            "portraitScale": 2
+        },
+        {
+            "name": "down",
+            "frames": [
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49
+            ],
+            "loop": "onBeat",
+            "fps": 10,
+            "loopStart": 1,
+            "portraitOffset": [
+                0,
+                0
+            ],
+            "portraitSize": [
+                25,
+                25
+            ],
+            "portraitScale": 2
+        },
+        {
+            "name": "left",
+            "frames": [
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59
+            ],
+            "loop": "onBeat",
+            "fps": 10,
+            "loopStart": 1,
+            "portraitOffset": [
+                0,
+                0
+            ],
+            "portraitSize": [
+                25,
+                25
+            ],
+            "portraitScale": 2
+        },
+        {
+            "name": "right",
+            "frames": [
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79
+            ],
+            "loop": "onBeat",
+            "fps": 10,
+            "loopStart": 1,
+            "portraitOffset": [
+                0,
+                0
+            ],
+            "portraitSize": [
+                25,
+                25
+            ],
+            "portraitScale": 2
+        },
+        {
+            "name": "stayup",
+            "frames": [
+                20
+            ],
+            "loop": "no",
+            "fps": 10,
+            "loopStart": 0,
+            "portraitOffset": [
+                0,
+                0
+            ],
+            "portraitSize": [
+                25,
+                25
+            ],
+            "portraitScale": 2
+        },
+        {
+            "name": "staydown",
+            "frames": [
+                0,
+                1,
+                2
+            ],
+            "loop": "onBeat",
+            "fps": 5,
+            "loopStart": 1,
+            "portraitOffset": [
+                0,
+                0
+            ],
+            "portraitSize": [
+                25,
+                25
+            ],
+            "portraitScale": 2
+        },
+        {
+            "name": "stayright",
+            "frames": [
+                30,
+                31,
+                32
+            ],
+            "loop": "onBeat",
+            "fps": 5,
+            "loopStart": 1,
+            "portraitOffset": [
+                0,
+                0
+            ],
+            "portraitSize": [
+                25,
+                25
+            ],
+            "portraitScale": 2
+        },
+        {
+            "name": "stayleft",
+            "frames": [
+                10,
+                11,
+                12
+            ],
+            "loop": "onBeat",
+            "fps": 5,
+            "loopStart": 1,
+            "portraitOffset": [
+                0,
+                0
+            ],
+            "portraitSize": [
+                25,
+                25
+            ],
+            "portraitScale": 2
+        }
+    ]
+}
