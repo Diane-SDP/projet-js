@@ -24,6 +24,7 @@ export class GameScene extends Scene {
         this.load.image("EmptyHeart",'./public/assets/HearthEmpty.png')
         this.load.image("octorok",'./public/assets/OctoRok.png')
         this.load.image("rock",'./public/assets/rock.png')
+        this.load.image("key","./public/assets/key.png")
 
     }
 
@@ -89,17 +90,20 @@ export class GameScene extends Scene {
     FillMonster(){
         for(var i = 0 ; i < this.Maze.length;i++){
             for(var j = 0 ; j < this.Maze.length;j++){
-                var nbEnnemy = Math.floor(Math.random() * 3)+1
-                for(var k = 0 ; k < nbEnnemy;k++){
-                    var WichMob = Math.floor(Math.random() * 100)
-                    if(WichMob < 30){
-                        var boko = new Ennemy({scene: this,type: "octorok"}).setScale(0.2)
-                        boko.Player = this.player
-                        this.Maze[i][j].Ennemies.push(boko)
-                    }else {
-                        var boko = new Ennemy({scene: this,type: "bokoblin"}).setScale(0.75)
-                        boko.Player = this.player
-                        this.Maze[i][j].Ennemies.push(boko)
+                console.log(this.Maze[i][j].special)
+                if (!this.Maze[i][j].wall && this.Maze[i][j].special === ""){
+                    var nbEnnemy = Math.floor(Math.random() * 3)+1
+                    for(var k = 0 ; k < nbEnnemy;k++){
+                        var WichMob = Math.floor(Math.random() * 100)
+                        if(WichMob < 30){
+                            var boko = new Ennemy({scene: this,type: "octorok"}).setScale(0.2)
+                            boko.Player = this.player
+                            this.Maze[i][j].Ennemies.push(boko)
+                        }else {
+                            var boko = new Ennemy({scene: this,type: "bokoblin"}).setScale(0.75)
+                            boko.Player = this.player
+                            this.Maze[i][j].Ennemies.push(boko)
+                        }
                     }
                 }
             }
@@ -136,9 +140,7 @@ export class GameScene extends Scene {
                 this.hideMap()
             }
         }
-        if(this.player.Health <= 0){
-            this.scene.start("gameover")
-        }
+
         this.player.move(direction)
         // this.bokoblin.Move(this.player)
         
@@ -189,8 +191,12 @@ export class GameScene extends Scene {
             for (let x = 0; x < this.MazeWidth; x++) {
                 if (this.player.Maze[y][x].wall === true) {
                     this.mapGraphics.fillStyle(0xff0000, 1); 
-                } else {
+                } else if (this.Maze[y][x].special == "key"){
+                    this.mapGraphics.fillStyle(0x808080, 1);
+
+                }else {
                     this.mapGraphics.fillStyle(0x000000, 1);
+
                 }
                 const rectX = (this.cameras.main.width - mapWidth) / 2 + x * tileSize;
                 const rectY = (this.cameras.main.height - mapHeight) / 2 + y * tileSize;

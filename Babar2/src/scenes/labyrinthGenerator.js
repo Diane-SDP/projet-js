@@ -19,6 +19,7 @@ export class LabyrinthGenerator {
             this.tracePath(0, 0);
             console.log(this.isResolvable())
         }
+        this.GenerateKey()
         // this.labyrinth[0][9].wall = true;
         return this.labyrinth;
     }
@@ -69,7 +70,21 @@ export class LabyrinthGenerator {
     isInside(y, x) { // vérifie si a case(x,y) existe dans le labyrinthe
         return y >= 0 && x >= 0 && y < this.height && x < this.width;
     }
+    GenerateKey(){
+        var found = false
+        while(!found){
+            const KeyX = Math.floor(Math.random() * (10));
+            const KeyY = Math.floor(Math.random() * (10));
 
+            console.log(KeyX,KeyY)
+            if(!this.labyrinth[KeyX][KeyY].wall){
+                found=true;
+                this.labyrinth[KeyX][KeyY].special = "key";
+                
+            }
+        }
+
+    }
     isResolvable() { // renvoie true si le labyronthe est faisable
         const stack = [[0, 0]];
         const visited = Array.from({ length: this.height }, () => Array(this.width).fill(false));

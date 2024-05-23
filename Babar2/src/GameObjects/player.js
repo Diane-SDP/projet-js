@@ -4,9 +4,8 @@ import {GameOverScene} from "../scenes/gameoverscene"
 
 
 export class Player extends Physics.Arcade.Sprite {
-    CanDash = true
-    CanAttack = true
-    velocity = 5;
+
+    velocity = 30;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -14,12 +13,17 @@ export class Player extends Physics.Arcade.Sprite {
     MazeMaxY = 10;
     HealthBar = []
     Direction = []
+    key = null
     constructor({scene}) {
+
         super(scene, 200, 100, "player");
+        this.CanDash = true
+        this.CanAttack = true
         this.scene = scene;
         this.Maze = []
         this.bokoblin = null
         this.weapon = "sword"
+        this.getkey = false
         switch(this.weapon){
             case "spear":
                 this.AttackDamage = 10
@@ -69,8 +73,18 @@ export class Player extends Physics.Arcade.Sprite {
                     break;
             }
         }
+        if(this.Maze[this.MazeY][this.MazeX].special == "key"){
+            if(this.x > 960/2-20 && this.x < 960/2+20 && this.y > 540/2-20 && this.y < 540/2+20){
+                this.key.destroy();
+                this.getkey = true
+            }
+        }
     }
     SwitchRoom(direction){
+        if (this.key != null){
+            this.key.destroy();
+
+        }
         switch (direction) {
             case "up":
                 if(this.MazeY != 0){
@@ -79,6 +93,7 @@ export class Player extends Physics.Arcade.Sprite {
                         this.scene.RemoveEnnemy(this.MazeX,this.MazeY)
                         this.MazeY--;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
+                        this.SpecialRoom()
                     }
                 }
                 break;
@@ -90,6 +105,7 @@ export class Player extends Physics.Arcade.Sprite {
 
                         this.MazeY++;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
+                        this.SpecialRoom()
 
                     }
 
@@ -103,23 +119,39 @@ export class Player extends Physics.Arcade.Sprite {
 
                         this.MazeX--;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
+                        this.SpecialRoom()
                     }
                 }
                 break;
             case "right":
-                if(this.MazeX != this.MazeMaxX-1){
+                if(this.MazeX == 9 && this.MazeY == 9 && this.getkey){
+                    this.scene.scene.start("menu")
+                }else if(this.MazeX != this.MazeMaxX-1){
                     if(this.Maze[this.MazeY][this.MazeX+1].wall == false){
                         this.x = 0+this.size
                         this.scene.RemoveEnnemy(this.MazeX,this.MazeY)
                         this.MazeX++;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
+                        this.SpecialRoom()
                     }
                 }
                 break;
             default:
                 break;
         }
+
     }
+    SpecialRoom(){
+        switch(this.Maze[this.MazeY][this.MazeX].special){
+            case "key":
+                console.log("key") 
+                this.key = this.scene.add.image(960/2, 540/2, "key").setOrigin(0.5, 0.5).setScale(0.08);                
+                break;
+            
+        }
+    }
+
+
     Attack(mouseX,mouseY,ennemies){
         switch (this.weapon) {
             case "sword":
@@ -193,7 +225,6 @@ export class Player extends Physics.Arcade.Sprite {
                 if (distanceToEnemy <= attackRadius+20 && isWithinArc) {
                     ennemy[i].IsAttacked(this.AttackDamage)
                     if(ennemy[i].Health <= 0){
-                        console.log(this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
                         
@@ -225,6 +256,9 @@ export class Player extends Physics.Arcade.Sprite {
     GetAttacked(amount){
         this.Health = this.Health - amount
         this.UpdateHealth()
+        if(this.Health <= 0){
+            this.scene.scene.start("gameover")
+        }
 
     }
     UpdateHealth(){
