@@ -127,7 +127,7 @@ export class GameScene extends Scene {
     FillMonster(){
         for(var i = 0 ; i < this.Maze.length;i++){  
             for(var j = 0 ; j < this.Maze.length;j++){
-                if (!this.Maze[j][i].wall && !this.Maze[j][i].special != "key"){
+                if (!this.Maze[j][i].wall && this.Maze[j][i].special != "key"){
                     var nbEnnemy = Math.floor(Math.random() * 3)+1
                     console.log(nbEnnemy)
                     for(var k = 0 ; k < nbEnnemy;k++){

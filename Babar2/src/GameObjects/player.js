@@ -5,7 +5,7 @@ import {GameOverScene} from "../scenes/gameoverscene"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 5;
+    velocity = 30;
     size = 50;
     MazeX = 0;
     MazeY = 0;
