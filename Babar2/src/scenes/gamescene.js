@@ -99,6 +99,28 @@ export class GameScene extends Scene {
         } else {
             this.mapGraphics = this.add.graphics();
         }
+
+    }
+
+    setVisitedCase(x, y) {
+        if (x < 0 || y < 0 || x >= this.MazeWidth || y >= this.MazeHeight) return;
+
+        this.Maze[y][x].visited = true;
+
+        const nextRooms = [
+            { x: x + 1, y: y },
+            { x: x - 1, y: y },
+            { x: x, y: y + 1 },
+            { x: x, y: y - 1 }
+        ];
+
+        nextRooms.forEach(room => {
+            if (room.x >= 0 && room.y >= 0 && room.x < this.MazeWidth && room.y < this.MazeHeight) {
+                if (!this.Maze[room.y][room.x].visited) {
+                    this.Maze[room.y][room.x].discovered = true;
+                }
+            }
+        });
     }
 
     FillMonster(){
@@ -156,6 +178,7 @@ export class GameScene extends Scene {
         }
         this.player.move(direction)
         // this.bokoblin.Move(this.player)
+        this.setVisitedCase(this.player.MazeX, this.player.MazeY)
         
     }
 
@@ -192,6 +215,45 @@ export class GameScene extends Scene {
             this.mapGraphics = this.add.graphics();
         }
 
+        this.mapGraphics.fillStyle(0x000000, 1);
+        this.mapGraphics.fillRect(
+            (this.cameras.main.width - mapWidth) / 2,
+            (this.cameras.main.height - mapHeight) / 2,
+            mapWidth,
+            mapHeight
+        );
+
+        for (let y = 0; y < this.MazeHeight; y++) {
+            for (let x = 0; x < this.MazeWidth; x++) {
+                if (this.Maze[y][x].visited === true && this.Maze[y][x].wall === false) {
+                    this.mapGraphics.fillStyle(0xff0000, 1);
+                } else if (this.Maze[y][x].discovered === true && this.Maze[y][x].wall === false) {
+                    this.mapGraphics.fillStyle(0x880000, 1);
+                } else {
+                    this.mapGraphics.fillStyle(0x000000, 1);
+                }
+                const rectX = (this.cameras.main.width - mapWidth) / 2 + x * tileSize;
+                const rectY = (this.cameras.main.height - mapHeight) / 2 + y * tileSize;
+                this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
+            }
+        }
+        this.mapGraphics.fillStyle(0x00ff00, 1);
+        const rectX = (this.cameras.main.width - mapWidth) / 2 + this.player.MazeX * tileSize;
+        const rectY = (this.cameras.main.height - mapHeight) / 2 + this.player.MazeY * tileSize;
+        this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
+    }       
+
+    displayFullMap() {
+        const tileSize = 40;
+        const mapWidth = this.MazeWidth * tileSize;
+        const mapHeight = this.MazeHeight * tileSize;
+
+        if (this.mapGraphics) {
+            this.mapGraphics.clear();
+        } else {
+            this.mapGraphics = this.add.graphics();
+        }
+
         this.mapGraphics.fillStyle(0x000000, 0.75);
         this.mapGraphics.fillRect(
             (this.cameras.main.width - mapWidth) / 2,
@@ -209,13 +271,6 @@ export class GameScene extends Scene {
                 }
                 const rectX = (this.cameras.main.width - mapWidth) / 2 + x * tileSize;
                 const rectY = (this.cameras.main.height - mapHeight) / 2 + y * tileSize;
-                console.log("this.cameras.main.width : ", this.cameras.main.width)
-                console.log("this.cameras.main.height : ", this.cameras.main.height)
-                console.log("mapWidth : ", mapWidth)
-                console.log("mapHeight : ", mapHeight)
-                console.log("rectX : ", rectX)
-                console.log("rectY : ", rectY)
-                console.log("tilesize : ", tileSize)
                 this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
             }
         }

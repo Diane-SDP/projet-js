@@ -11,7 +11,7 @@ export class LabyrinthGenerator {
     }
 
     generateLabyrinth() {
-        this.tracePath(0, 0); // génère le labyrinthe
+        this.tracePath(0, 0) // génère le labyrinthe
         this.labyrinth[9][9].wall = false;
         console.log(this.isResolvable())
         while (!this.isResolvable()) { //le régénère si besoin
@@ -19,8 +19,17 @@ export class LabyrinthGenerator {
             this.tracePath(0, 0);
             console.log(this.isResolvable())
         }
+        this.setVisitedFalse()
         // this.labyrinth[0][9].wall = true;
-        return this.labyrinth;
+        return this.labyrinth
+    }
+
+    setVisitedFalse() {
+        for (let x = 0; x < this.height; x++) {
+            for (let y = 0; y < this.width; y++) {
+                this.labyrinth[x][y].visited = false
+            }
+        }
     }
 
     tracePath(y, x) { //creuse le labyrinthe, utilise la recherche en profondeur (DFS)
