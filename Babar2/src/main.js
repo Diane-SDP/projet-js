@@ -8,7 +8,9 @@ import { Credits } from "./scenes/creditscene";
 import Phaser from 'phaser';
 
 export const global = {
-    coin: 0
+    coin: 5000,
+    nbWeaponBonus: 0,
+    nbHeartBonus: 0
 };
 
 var config = {

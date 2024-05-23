@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
+import {global} from "../main"
+
 
 export class Shop extends Phaser.Scene {
     constructor() {
@@ -6,6 +8,8 @@ export class Shop extends Phaser.Scene {
         this.selectedWeapon = null;
         this.sword = ""
         this.spear = ""
+        this.upgradeWeapon = ""
+        this.upgradeHeart = ""
     }
 
     preload() {
@@ -29,6 +33,10 @@ export class Shop extends Phaser.Scene {
             .setOrigin(0.5)
             .setInteractive();
         validateButton.on('pointerdown', () => this.validateSelection());
+        this.coinsText = this.add.text(this.cameras.main.width - 20, 20, `Coins: ${global.coin}`, { fontSize: '24px', fill: '#FFF' })
+            .setOrigin(1, 0);
+        this.updateCoinsText();
+        this.UpgradeButtons()
     }
 
     selectWeapon(weapon) {
@@ -50,4 +58,59 @@ export class Shop extends Phaser.Scene {
             console.log('No weapon selected!');
         }
     }
+
+    UpgradeButtons() {
+        const weaponUpgradeCost = 25 + 5 * global.nbWeaponBonus;
+        const heartUpgradeCost = 30;
+
+        this.upgradeWeapon = this.add.text(this.cameras.main.width / 2, 3 * this.cameras.main.height / 4 + 50, `Upgrade Attack (${weaponUpgradeCost} coins)`, { fontSize: '24px', fill: '#FFF' })
+            .setOrigin(0.5)
+            .setInteractive()
+        this.upgradeHeart = this.add.text(this.cameras.main.width / 2, 3 * this.cameras.main.height / 4 + 100, `Add Heart (${heartUpgradeCost} coins)`, { fontSize: '24px', fill: '#FFF' })
+            .setOrigin(0.5)
+            .setInteractive()
+
+        this.updateUpgrades();
+
+        this.upgradeWeapon.on('pointerdown', () => {
+            if (global.coin >= weaponUpgradeCost && global.nbWeaponBonus < 5) {
+                global.coin -= weaponUpgradeCost
+                global.nbWeaponBonus += 1
+                this.updateUpgrades()
+            }
+        });
+
+        this.upgradeHeart.on('pointerdown', () => {
+            if (global.coin >= heartUpgradeCost && global.nbHeartBonus < 5) {
+                global.coin -= heartUpgradeCost
+                global.nbHeartBonus += 1
+                this.updateUpgrades()
+            }
+        });
+    }
+
+    updateUpgrades() {
+        const weaponUpgradeCost = 25 + 5 * global.nbWeaponBonus
+
+        this.upgradeWeapon.setText(`Upgrade Attack (${weaponUpgradeCost} coins) - Level ${global.nbWeaponBonus}/5`)
+        if (global.nbWeaponBonus >= 5 || global.coin < weaponUpgradeCost) {
+            this.upgradeWeapon.disableInteractive().setStyle({ fill: '#888' })
+        } else {
+            this.upgradeWeapon.setInteractive().setStyle({ fill: '#FFF' })
+        }
+
+        const heartUpgradeCost = 30;
+        this.upgradeHeart.setText(`Add Heart (${heartUpgradeCost} coins) - Level ${global.nbHeartBonus}/5`)
+        if (global.nbHeartBonus >= 5 || global.coin < heartUpgradeCost) {
+            this.upgradeHeart.disableInteractive().setStyle({ fill: '#888' })
+        } else {
+            this.upgradeHeart.setInteractive().setStyle({ fill: '#FFF' })
+        }
+        this.updateCoinsText()      
+    }
+
+    updateCoinsText() {
+        this.coinsText.setText(`Coins: ${global.coin}`);
+    }
+
 }
