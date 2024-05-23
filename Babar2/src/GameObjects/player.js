@@ -1,6 +1,6 @@
 import { GameObjects,Physics } from "phaser";
 
-export class Player extends Physics.Arcade.Sprite {
+export class Player extends Physics.Arcade.Sprite{
     CanDash = true
     CanAttack = true
     velocity = 5;

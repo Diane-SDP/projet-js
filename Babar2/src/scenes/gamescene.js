@@ -20,6 +20,7 @@ export class GameScene extends Scene {
         this.load.image("FullHeart",'./public/assets/HearthFull.png')
         this.load.image("MidHeart",'./public/assets/HearthMid.png')
         this.load.image("EmptyHeart",'./public/assets/HearthEmpty.png')
+        this.load.atlas('a-player', './public/assets/spriteSheets/player.png', './src/animations/spritePlayer.json');
 
     }
 
@@ -28,9 +29,6 @@ export class GameScene extends Scene {
 
         this.player = new Player({ scene: this });
         this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
-        
-        // this.bokoblin.setScale(0.75)
-
 
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keys = this.input.keyboard.addKeys({
