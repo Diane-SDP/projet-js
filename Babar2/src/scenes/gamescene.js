@@ -6,13 +6,17 @@ import { Ennemy } from "../GameObjects/ennemy";
 import {GameOverScene} from "./gameoverscene"
 
 export class GameScene extends Scene {
-    player = null;
-    bokoblin = null;
+    player = null
+    bokoblin = null
     Maze = []
-    MazeHeight = 10;
-    MazeWidth = 10;
+    MazeHeight = 10
+    MazeWidth = 10
     constructor() {
         super('game');
+    }
+
+    init(data) {
+        this.selectedWeapon = data.weapon;
     }
 
     preload() {
@@ -43,7 +47,7 @@ export class GameScene extends Scene {
 
         this.resetGame()
 
-        this.player = new Player({ scene: this });
+        this.player = new Player({ scene: this, weapon: this.selectedWeapon })
         this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
         
         // this.bokoblin.setScale(0.75)

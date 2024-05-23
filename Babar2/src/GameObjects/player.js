@@ -17,7 +17,8 @@ export class Player extends Physics.Arcade.Sprite {
     key = null
     oldDirection = ""
     actualroom =""
-    constructor({scene}) {
+    weapon = ""
+    constructor({scene, weapon}) {
 
         super(scene, 200, 100, "player");
         this.CanDash = true
@@ -25,7 +26,7 @@ export class Player extends Physics.Arcade.Sprite {
         this.scene = scene;
         this.Maze = []
         this.bokoblin = null
-        this.weapon = "sword"
+        this.weapon = weapon
         this.getkey = false
         switch(this.weapon){
             case "spear":
