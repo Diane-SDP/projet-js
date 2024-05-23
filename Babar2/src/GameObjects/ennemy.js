@@ -2,38 +2,87 @@ import { GameObjects,Physics } from "phaser";
 
 export class Ennemy extends Physics.Arcade.Image {
 
-    constructor({scene}) {
-        super(scene, 600, 300, "bokoblin");
+    constructor({scene,type}) {
+        
+        switch(type){
+            case "bokoblin":
+                var image = "bokoblin"
+                var velocity = 1
+                break;
+            case "octorok":
+                var image = "octorok"
+                var velocity = 2
+        }
+        super(scene, Math.floor(Math.random() * 900), Math.floor(Math.random() * 500), image);
+        this.BasicVelocity = velocity
+        this.type = type
         this.scene = scene;
         this.Maze = []
+        
         this.Health = 100;
-        this.BasicVelocity = 1;
+        this.projectiles = [];
         this.velocity = this.BasicVelocity
-  
+        this.active = true;
         this.CanAttack = true;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this)
         this.healthBar = this.scene.add.graphics()
+        this.deactivate()
         this.updateHealthBar()
+        
     }   
     updateHealthBar() {
         this.healthBar.clear()
-        this.healthBar.fillStyle(0xff0000, 1)
-        this.healthBar.fillRect(this.x - 55, this.y - 60, this.Health, 8)
+        if(this.active){
+            this.healthBar.fillStyle(0xff0000, 1)
+            this.healthBar.fillRect(this.x - 55, this.y - 60, this.Health, 8)       
+        }
+
     }
-    update(){
+    update(Player){
         this.updateHealthBar()
+        this.Move(this.Player)
+        this.projectiles.forEach((projectile, index) => {
+            const distance = Phaser.Math.Distance.Between(projectile.x, projectile.y, Player.x, Player.y);
+            if (distance < 40) { // Ajustez cette valeur selon vos besoins
+                // this.handleProjectileHit(Player, projectile);
+                Player.GetAttacked(1)
+                projectile.destroy();
+                this.projectiles.splice(index, 1);
+            }
+        });
+    }
+    activate() {
+        this.active = true;
+        this.setVisible(true);
+        this.setActive(true);
+        this.body.enable = true;
     }
 
+    // Méthode pour désactiver l'ennemi
+    deactivate() {
+        this.healthBar.clear()
+        this.active = false;
+        this.setVisible(false);
+        this.setActive(false);
+        this.body.enable = false;
+    }
     IsAttacked(amount) {
         // Logic for when the enemy is attacked
         this.Health-= amount;
-        if (this.Health <=0){
-            this.destroy();
-            // this.disableBody(true,true)
-        }
     }
     Move(Player){
+        switch(this.type){
+            case "bokoblin":
+                this.MoveBokoblin(Player)
+                break;
+            case "octorok":
+                this.MoveOctorok(Player)
+                break;
+        }
+
+    }
+    MoveBokoblin(Player){
         if(Player.x < this.x){
             this.x = this.x-this.velocity
         }else if(Player.x > this.x) {
@@ -50,14 +99,60 @@ export class Ennemy extends Physics.Arcade.Image {
         if(distance <= 200){
             
             if(this.CanAttack){
-                this.Attack(Player)
+                this.AttackBokoblin(Player)
             }
 
         }
-
     }
-    Attack(Player){
-        
+    MoveOctorok(Player){
+        let distance = Math.sqrt(((Player.x-this.x)**2)+((Player.y-this.y)**2))
+        if(distance >= 300){
+            
+            if(this.CanAttack){
+                this.AttackOctorok(Player)
+            }
+
+        } else {
+            let directionX = this.x - Player.x;
+            let directionY = this.y - Player.y;
+            
+            let magnitude = Math.sqrt(directionX ** 2 + directionY ** 2);
+            directionX /= magnitude;
+            directionY /= magnitude;
+            
+            let newX = this.x + directionX * this.velocity;
+            let newY = this.y + directionY * this.velocity;
+    
+            if (newX < 0) newX = 0;
+            if (newX > 960) newX = 960;
+            if (newY < 0) newY = 0;
+            if (newY > 540) newY = 540;
+    
+            this.x = newX;
+            this.y = newY;
+        }
+    }
+
+    AttackOctorok(Player){
+        this.CanAttack = false
+        const angleToPlayer = Phaser.Math.Angle.Between(this.x, this.y, Player.x, Player.y)
+        const projectile = this.scene.physics.add.sprite(this.x, this.y, 'rock').setScale(0.3);
+        projectile.displayWidth = 80;
+        projectile.displayHeight = 80;
+        projectile.setAngle(Phaser.Math.RadToDeg(angleToPlayer));
+        const speed = 300;
+        projectile.setVelocity(
+            Math.cos(angleToPlayer) * speed,
+            Math.sin(angleToPlayer) * speed
+        );
+        this.projectiles.push(projectile);
+        this.scene.time.delayedCall(2000, () => {
+            this.CanAttack = true;
+        });
+    }
+
+
+    AttackBokoblin(Player){
         let Attacked = false
         this.CanAttack = false
         const attackWidth = 100
@@ -106,7 +201,6 @@ export class Ennemy extends Physics.Arcade.Image {
                 }, 700);
             }, 100);
 
-        }, 350);
+        }, 350);  
     }
-
 }
