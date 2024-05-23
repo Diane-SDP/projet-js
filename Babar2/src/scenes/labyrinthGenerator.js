@@ -19,12 +19,20 @@ export class LabyrinthGenerator {
             this.tracePath(0, 0);
             console.log(this.isResolvable())
         }
-        this.GenerateKey()
+        
+        this.GenerateSpecialRoom()
         this.setVisitedFalse()
         // this.labyrinth[0][9].wall = true;
         return this.labyrinth
     }
-
+    GenerateSpecialRoom(){
+        this.GenerateKey()
+        for(var i = 0 ; i < 3;i++){
+            this.Generate("ice")
+            this.Generate("water")
+            this.Generate("wind")
+        }
+    }
     setVisitedFalse() {
         for (let x = 0; x < this.height; x++) {
             for (let y = 0; y < this.width; y++) {
@@ -90,6 +98,25 @@ export class LabyrinthGenerator {
                 found=true;
                 this.labyrinth[KeyX][KeyY].special = "key";
                 
+            }
+        }
+
+    }
+    Generate(element){
+        var found = false
+        while(!found){
+            const KeyX = Math.floor(Math.random() * (10));
+            const KeyY = Math.floor(Math.random() * (10));
+
+            if(!this.labyrinth[KeyX][KeyY].wall && this.labyrinth[KeyX][KeyY].special==""){
+                if (!(KeyX ==0 && KeyY==0)){
+                    found=true;
+                    this.labyrinth[KeyX][KeyY].special = element;
+                    if(element == "wind"){
+                        const WindDirection = Math.floor(Math.random() * (4));
+                        this.labyrinth[KeyX][KeyY].wind = WindDirection
+                    }
+                }
             }
         }
 

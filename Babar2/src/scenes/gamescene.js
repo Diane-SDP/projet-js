@@ -127,9 +127,9 @@ export class GameScene extends Scene {
     FillMonster(){
         for(var i = 0 ; i < this.Maze.length;i++){  
             for(var j = 0 ; j < this.Maze.length;j++){
-                console.log(this.Maze[i][j].special)
-                if (!this.Maze[i][j].wall && this.Maze[i][j].special === ""){
+                if (!this.Maze[j][i].wall && this.Maze[j][i].special != "key"){
                     var nbEnnemy = Math.floor(Math.random() * 3)+1
+                    console.log(nbEnnemy)
                     for(var k = 0 ; k < nbEnnemy;k++){
                         var WhichMob = Math.floor(Math.random() * 100)
                         if(WhichMob < 30){
@@ -147,6 +147,7 @@ export class GameScene extends Scene {
         }
         this.Maze[0][0].Ennemies = []
     }
+    
     update() {    
         for(var i = 0 ; i < this.Maze[this.player.MazeX][this.player.MazeY].Ennemies.length;i++){
             if(this.Maze[this.player.MazeX][this.player.MazeY].Ennemies[i] !== undefined){
@@ -171,7 +172,8 @@ export class GameScene extends Scene {
         }
         if (this.keys.TAB.isDown) {
             console.log("TAB")
-            this.displayMap();
+            // this.displayMap();
+            this.displayFullMap()
         } else {
             if (this.mapGraphics != null) {
                 this.hideMap()
@@ -270,7 +272,13 @@ export class GameScene extends Scene {
                     this.mapGraphics.fillStyle(0xff0000, 1); 
                 } else if (this.Maze[y][x].special == "key"){
                     this.mapGraphics.fillStyle(0x808080, 1);
-
+                }else if (this.Maze[y][x].special == "ice"){
+                    this.mapGraphics.fillStyle(0x77b5fe, 1);
+                }else if(this.Maze[y][x].special == "water"){
+                    this.mapGraphics.fillStyle(0x0000ff, 1);
+                    
+                }else if(this.Maze[y][x].special == "wind"){
+                    this.mapGraphics.fillStyle(0x006400, 1);
                 }else {
                     this.mapGraphics.fillStyle(0x000000, 1);
 
