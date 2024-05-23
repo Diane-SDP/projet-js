@@ -5,7 +5,7 @@ import {GameOverScene} from "../scenes/gameoverscene"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 30;
+    velocity = 10;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -13,6 +13,7 @@ export class Player extends Physics.Arcade.Sprite {
     MazeMaxY = 10;
     HealthBar = []
     Direction = []
+    heart = null
     key = null
     constructor({scene}) {
 
@@ -73,17 +74,30 @@ export class Player extends Physics.Arcade.Sprite {
                     break;
             }
         }
+
         if(this.Maze[this.MazeY][this.MazeX].special == "key"){
             if(this.x > 960/2-20 && this.x < 960/2+20 && this.y > 540/2-20 && this.y < 540/2+20){
                 this.key.destroy();
                 this.getkey = true
             }
+        } else if(this.Maze[this.MazeY][this.MazeX].heart === true){
+            if(this.x > 960/2-20 && this.x < 960/2+20 && this.y > 540/2-20 && this.y < 540/2+20){
+                this.heart.destroy();
+                this.Maze[this.MazeY][this.MazeX].heart = false
+                this.Health += 2
+                if (this.Health > 10) {
+                    this.Health = 10
+                }
+                this.UpdateHealth()
+            }
         }
     }
     SwitchRoom(direction){
         if (this.key != null){
-            this.key.destroy();
-
+            this.key.destroy()
+        }
+        if (this.heart != null) {
+            this.heart.destroy()
         }
         switch (direction) {
             case "up":
@@ -116,7 +130,6 @@ export class Player extends Physics.Arcade.Sprite {
                     if(this.Maze[this.MazeY][this.MazeX-1].wall == false){
                         this.x = 960-this.size
                         this.scene.RemoveEnnemy(this.MazeX,this.MazeY)
-
                         this.MazeX--;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
                         this.SpecialRoom()
@@ -142,10 +155,14 @@ export class Player extends Physics.Arcade.Sprite {
 
     }
     SpecialRoom(){
+        if (this.Maze[this.MazeY][this.MazeX].heart == true) {
+            console.log("met un coeur pute")
+            this.heart = this.scene.add.image(960/2, 540/2, "FullHeart").setOrigin(0.5, 0.5).setScale(0.08)    
+        }
         switch(this.Maze[this.MazeY][this.MazeX].special){
             case "key":
                 console.log("key") 
-                this.key = this.scene.add.image(960/2, 540/2, "key").setOrigin(0.5, 0.5).setScale(0.08);                
+                this.key = this.scene.add.image(960/2, 540/2, "key").setOrigin(0.5, 0.5).setScale(0.08)                
                 break;
             
         }
@@ -186,13 +203,12 @@ export class Player extends Physics.Arcade.Sprite {
                 const isWithinArc = Math.abs(angleDifference) <= Phaser.Math.DegToRad(45); // 45 degrees arc
                 if (isWithinDistance && isWithinWidth && isWithinArc) {
                     ennemy[i].IsAttacked(this.AttackDamage);
-                    console.log(this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
                     if(ennemy[i].Health <= 0){
-                        console.log(this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
+                        console.log("il est mort")
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
-                        
-                        
+                        this.scene.Maze[this.MazeX][this.MazeY].checkEnnemies()
+                        this.SpecialRoom()
                     }
                 }
             }
@@ -227,8 +243,8 @@ export class Player extends Physics.Arcade.Sprite {
                     if(ennemy[i].Health <= 0){
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
-                        
-                        
+                        this.scene.Maze[this.MazeY][this.MazeX].checkEnnemies()
+                        this.SpecialRoom()
                     }       
                 }
             }

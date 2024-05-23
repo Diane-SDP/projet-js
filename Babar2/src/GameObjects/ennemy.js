@@ -68,7 +68,6 @@ export class Ennemy extends Physics.Arcade.Image {
         this.body.enable = false;
     }
     IsAttacked(amount) {
-        // Logic for when the enemy is attacked
         this.Health-= amount;
     }
     Move(Player){
