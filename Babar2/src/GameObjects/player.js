@@ -6,7 +6,7 @@ import {global} from "../main"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 30;
+    velocity = 10;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -199,7 +199,6 @@ export class Player extends Physics.Arcade.Sprite {
                         this.MazeX++;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
                         this.actualroom = this.Maze[this.MazeY][this.MazeX].special
-
                         this.SpecialRoom()
                     }
                 }
@@ -216,9 +215,17 @@ export class Player extends Physics.Arcade.Sprite {
         }
         switch(this.Maze[this.MazeY][this.MazeX].special){
             case "key":
-                console.log("key") 
                 this.key = this.scene.add.image(960/2, 540/2, "key").setOrigin(0.5, 0.5).setScale(0.08)                
-                break;
+                break
+            case "water":
+                this.scene.setBackground("waterBG")  
+                break
+            case "ice":
+                this.scene.setBackground("iceBG") 
+                break
+            default:
+                this.scene.setBackground("BG") 
+                break
         }
     }
 
