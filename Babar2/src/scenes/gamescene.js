@@ -133,8 +133,8 @@ export class GameScene extends Scene {
                     var nbEnnemy = Math.floor(Math.random() * 3)+1
                     console.log(nbEnnemy)
                     for(var k = 0 ; k < nbEnnemy;k++){
-                        var WichMob = Math.floor(Math.random() * 100)
-                        if(WichMob < 30){
+                        var WhichMob = Math.floor(Math.random() * 100)
+                        if(WhichMob < 30){
                             var boko = new Ennemy({scene: this,type: "octorok"}).setScale(0.2)
                             boko.Player = this.player
                             this.Maze[i][j].Ennemies.push(boko)
