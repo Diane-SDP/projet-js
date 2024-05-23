@@ -4,6 +4,8 @@ export class Shop extends Phaser.Scene {
     constructor() {
         super('shop');
         this.selectedWeapon = null;
+        this.sword = ""
+        this.spear = ""
     }
 
     preload() {
@@ -13,15 +15,15 @@ export class Shop extends Phaser.Scene {
 
     create() {
 
-        const sword = this.add.image(this.cameras.main.width / 3, this.cameras.main.height / 2, 'sword')
+        this.sword = this.add.image(this.cameras.main.width / 3, this.cameras.main.height / 2, 'sword')
         .setInteractive()
         .setScale(0.4)
-        const spear = this.add.image(2 * this.cameras.main.width / 3, this.cameras.main.height / 2, 'spear')
+        this.spear = this.add.image(2 * this.cameras.main.width / 3, this.cameras.main.height / 2, 'spear')
         .setInteractive()
         .setScale(0.06)
 
-        sword.on('pointerdown', () => this.selectWeapon('sword'));
-        spear.on('pointerdown', () => this.selectWeapon('spear'));
+        this.sword.on('pointerdown', () => this.selectWeapon('sword'));
+        this.spear.on('pointerdown', () => this.selectWeapon('spear'));
 
         const validateButton = this.add.text(this.cameras.main.width / 2, 3 * this.cameras.main.height / 4, 'CHOOSE', { fontSize: '32px', fill: '#FFF' })
             .setOrigin(0.5)
@@ -31,6 +33,13 @@ export class Shop extends Phaser.Scene {
 
     selectWeapon(weapon) {
         this.selectedWeapon = weapon;
+        if (weapon == "sword") {
+            this.sword.setScale(0.5)
+            this.spear.setScale(0.06)
+        } else {
+            this.sword.setScale(0.4)
+            this.spear.setScale(0.09)
+        }
         console.log("arme choisie : ", weapon)
     }
 
