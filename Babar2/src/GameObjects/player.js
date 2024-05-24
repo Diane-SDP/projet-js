@@ -1,5 +1,6 @@
 import { GameObjects,Physics } from "phaser";
 import {GameOverScene} from "../scenes/gameoverscene"
+import{BossScene} from "../scenes/BossScene"
 import {global} from "../main"
 
 
@@ -190,7 +191,7 @@ export class Player extends Physics.Arcade.Sprite {
                 break;
             case "right":
                 if(this.MazeX == 9 && this.MazeY == 9 && this.getkey){
-                    this.scene.scene.start("boss")
+                    this.scene.scene.start("BossScene")
                 }else if(this.MazeX != this.MazeMaxX-1){
                     if(this.Maze[this.MazeY][this.MazeX+1].wall == false){
                         this.x = 0+this.size
