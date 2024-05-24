@@ -19,16 +19,19 @@ export class Player extends Physics.Arcade.Sprite {
         this.CanAttack = true
         this.scene = scene;
         this.Maze = []
+    
         this.bokoblin = null
-        this.weapon = "sword"
+        this.weapon = "spear"
         switch(this.weapon){
             case "spear":
-                this.AttackDamage = 10
+                this.AttackDamage = 10*10
                 break;
             case "sword":
                 this.AttackDamage = 20
+                break;
             case "master":
-                this.AttackDamage = 20
+                this.AttackDamage = 1
+                break;
         }
         this.Health = 10//10 demi coeurs pour 5 coeurs
         this.scene.add.existing(this);

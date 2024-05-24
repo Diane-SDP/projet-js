@@ -6,7 +6,7 @@ import {global} from "../main"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 10;
+    velocity = 20;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -123,7 +123,7 @@ export class Player extends Physics.Arcade.Sprite {
         }
         
         if(this.Maze[this.MazeY][this.MazeX].special == "key"){
-            if(this.x > 960/2-20 && this.x < 960/2+20 && this.y > 540/2-20 && this.y < 540/2+20){
+            if(this.x > 960/2-40 && this.x < 960/2+40 && this.y > 540/2-40 && this.y < 540/2+40){
                 this.key.destroy();
                 this.getkey = true
             }

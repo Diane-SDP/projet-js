@@ -195,7 +195,7 @@ export class GameScene extends Scene {
         if (this.keys.TAB.isDown) {
             console.log("TAB")
             //this.displayMap();
-            this.displayFullMap()
+            this.displayMap()
         } else {
             if (this.mapGraphics != null) {
                 this.hideMap()
