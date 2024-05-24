@@ -9,18 +9,23 @@ import {global} from "../main"
 
 
 export class GameScene extends Scene {
-    player = null;
-    bokoblin = null;
+    player = null
+    bokoblin = null
     Maze = []
-    MazeHeight = 10;
-    MazeWidth = 10;
-    
+    MazeHeight = 10
+    MazeWidth = 10
     constructor() {
         super('game');
     }
 
+    init(data) {
+        this.selectedWeapon = data.weapon;
+    }
+
     preload() {
-        this.load.image('background', './public/assets/wallpaper.jpg');
+        this.load.image('iceBG', './public/assets/ice.png')
+        this.load.image('waterBG', './public/assets/waterBG.png')
+        this.load.image('BG', './public/assets/BG.png')
         this.load.image("player",'./public/assets/player.png')
         this.load.image("bokoblin",'./public/assets/bokoblin.png')
         this.load.image("FullHeart",'./public/assets/HearthFull.png')
@@ -35,6 +40,13 @@ export class GameScene extends Scene {
 
     }
 
+    setBackground(backgroundKey) {
+        if (this.currentBackground) {
+            this.currentBackground.destroy()
+        }
+        this.currentBackground = this.add.image(0, 0, backgroundKey).setOrigin(0, 0).setDisplaySize(960, 540)
+        this.currentBackground.setDepth(-1)
+    }
 
     resetGame() {
         this.player = null
@@ -48,8 +60,9 @@ export class GameScene extends Scene {
     create() {
 
         this.resetGame()
+        this.setBackground("BG")
 
-        this.player = new Player({ scene: this });
+        this.player = new Player({ scene: this, weapon: this.selectedWeapon })
         this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
         
         // this.bokoblin.setScale(0.75)
@@ -178,7 +191,7 @@ export class GameScene extends Scene {
         }
         if (this.keys.TAB.isDown) {
             console.log("TAB")
-            // this.displayMap();
+            //this.displayMap();
             this.displayFullMap()
         } else {
             if (this.mapGraphics != null) {

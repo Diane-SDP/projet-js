@@ -1,4 +1,5 @@
 import {GameScene} from "./scenes/gamescene"
+import {Shop} from "./scenes/shop"
 import { Labyrinth } from "./scenes/labyrinth";
 import {MenuScene} from "./scenes/menuscene"
 import {GameOverScene} from "./scenes/gameoverscene"
@@ -8,7 +9,9 @@ import { BossScene } from "./scenes/BossScene";
 import Phaser from 'phaser';
 
 export const global = {
-    coin: 0
+    coin: 5000,
+    nbWeaponBonus: 0,
+    nbHeartBonus: 0
 };
 
 var config = {
@@ -18,6 +21,7 @@ var config = {
     scene: [
         
         MenuScene,
+        Shop,
         GameScene,
         GameOverScene,
         BossScene

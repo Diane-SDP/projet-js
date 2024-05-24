@@ -28,11 +28,11 @@ export class MenuScene extends Scene {
             fontSize: '32px',
             fill: '#f00'
         };
-        const helloButton = this.add.text(screenCenterX, screenCenterY, 'Jouer', style).setOrigin(0.5);
-        helloButton.setInteractive();
-        helloButton.on('pointerover', () => { helloButton.setFill("#0f0") });
-        helloButton.on('pointerout', () => { helloButton.setFill("#f00") });
-        helloButton.on('pointerdown', () => this.scene.start("game"))
+        const startButton = this.add.text(screenCenterX, screenCenterY, 'Jouer', style).setOrigin(0.5);
+        startButton.setInteractive();
+        startButton.on('pointerover', () => { startButton.setFill("#0f0") });
+        startButton.on('pointerout', () => { startButton.setFill("#f00") });
+        startButton.on('pointerdown', () => this.scene.start("shop"))
         // this.scene.start("game");
     }
     update(){
