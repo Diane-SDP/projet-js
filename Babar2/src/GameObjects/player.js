@@ -6,7 +6,7 @@ import {global} from "../main"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 30;
+    velocity = 5;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -26,7 +26,7 @@ export class Player extends Physics.Arcade.Sprite {
         this.scene = scene;
         this.Maze = []
         this.bokoblin = null
-        this.weapon = "sword"
+        this.weapon = "spear"
         this.getkey = false
         switch(this.weapon){
             case "spear":
@@ -190,7 +190,7 @@ export class Player extends Physics.Arcade.Sprite {
                 break;
             case "right":
                 if(this.MazeX == 9 && this.MazeY == 9 && this.getkey){
-                    this.scene.scene.start("menu")
+                    this.scene.scene.start("boss")
                 }else if(this.MazeX != this.MazeMaxX-1){
                     if(this.Maze[this.MazeY][this.MazeX+1].wall == false){
                         this.x = 0+this.size

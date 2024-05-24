@@ -6,6 +6,8 @@ import { Ennemy } from "../GameObjects/ennemy";
 import {GameOverScene} from "./gameoverscene"
 
 import {global} from "../main"
+
+
 export class GameScene extends Scene {
     player = null;
     bokoblin = null;
@@ -27,7 +29,9 @@ export class GameScene extends Scene {
         this.load.image("octorok",'./public/assets/OctoRok.png')
         this.load.image("rock",'./public/assets/rock.png')
         this.load.image("key","./public/assets/key.png")
+        this.load.image("ganon","./public/assets/ganon.png")
         this.load.atlas('a-player', './public/assets/spriteSheets/player.png', './src/animations/spritePlayer.json');
+        
 
     }
 
@@ -183,7 +187,6 @@ export class GameScene extends Scene {
         }
 
         this.player.move(direction)
-        // this.bokoblin.Move(this.player)
         this.setVisitedCase(this.player.MazeX, this.player.MazeY)
         
     }
