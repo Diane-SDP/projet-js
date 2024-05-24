@@ -25,4 +25,5 @@ export class Case {
         this.heart = true
         return true
     }
+   
 }

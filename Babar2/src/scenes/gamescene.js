@@ -24,6 +24,7 @@ export class GameScene extends Scene {
 
     preload() {
         this.load.image('iceBG', './public/assets/ice.png')
+        this.load.image('wall', './public/assets/wall.png')
         this.load.image('waterBG', './public/assets/waterBG.png')
         this.load.image('BG', './public/assets/BG.png')
         this.load.image("player",'./public/assets/player.png')
@@ -58,7 +59,7 @@ export class GameScene extends Scene {
     }
 
     create() {
-
+        this.walls = []
         this.resetGame()
         this.setBackground("BG")
 
@@ -119,6 +120,8 @@ export class GameScene extends Scene {
         } else {
             this.mapGraphics = this.add.graphics();
         }
+
+        this.checkWalls()
 
     }
 
@@ -203,6 +206,45 @@ export class GameScene extends Scene {
         this.setVisitedCase(this.player.MazeX, this.player.MazeY)
         
     }
+
+    displayWalls(position) { 
+        console.log("walls : ", this.walls)
+        switch (position) {
+            case "up" :
+                this.walls.push(this.add.image(0, 0, "wall").setOrigin(0, 0).setDisplaySize(960, 50))
+                break
+            case "down" :
+                this.walls.push(this.add.image(0, 490, "wall").setOrigin(0, 0).setDisplaySize(960, 50))
+                break
+            case "right" :
+                this.walls.push(this.add.image(910, 0, "wall").setOrigin(0, 0).setDisplaySize(50, 540))
+                break
+            case "left" :
+                this.walls.push(this.add.image(0, 0, "wall").setOrigin(0, 0).setDisplaySize(50, 540))
+                break
+        }
+    }
+
+    checkWalls() {
+        const { MazeX, MazeY } = this.player;
+
+        if (MazeY - 1 < 0 || this.Maze[MazeY - 1][MazeX].wall) {
+            this.displayWalls("up");
+        }
+
+        if (MazeY + 1 >= this.MazeHeight || this.Maze[MazeY + 1][MazeX].wall) {
+            this.displayWalls("down");
+        }
+
+        if (MazeX + 1 >= this.MazeWidth || this.Maze[MazeY][MazeX + 1].wall) {
+            this.displayWalls("right");
+        }
+
+        if (MazeX - 1 < 0 || this.Maze[MazeY][MazeX - 1].wall) {
+            this.displayWalls("left");
+        }
+    }
+    
 
     displayEnnemy(x,y){
         for(var i = 0 ; i < this.Maze[x][y].Ennemies.length;i++){
