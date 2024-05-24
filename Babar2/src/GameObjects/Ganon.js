@@ -5,20 +5,21 @@ export class Ganon extends Physics.Arcade.Image {
 
     constructor({scene}) {
         super(scene, 480,100, "ganon1START");
-        this.BasicVelocity = 0
+        this.BasicVelocity = 2
         this.MaxHealth = 100
         this.Health = 100;
+        this.scene = scene;
         this.projectiles = [];
         this.Bullet = null
         this.BulletGanon = true;
         this.BulletSpeed = 0;
         this.Bulletnb = 0;
-
+        this.MeteorNB = 0;
         this.velocity = this.BasicVelocity
         this.active = true;
         this.CanAttack = true;
         this.phase = 1;
-        
+        this.Defense = 3;
         this.invincibility = true
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this)
@@ -152,8 +153,45 @@ export class Ganon extends Physics.Arcade.Image {
             
         }, 3000);
     }
+    MoveGanon(Player){
+
+        if(Player.x < this.x){
+            this.x = this.x-this.velocity
+        }else if(Player.x > this.x) {
+            this.x = this.x+this.velocity
+        }
+       
+        if(Player.y < this.y){
+            this.y = this.y-this.velocity
+        }else if(Player.y > this.y) {
+            this.y = this.y+this.velocity   
+        }
+        
+        let distance = Math.sqrt(((Player.x-this.x)**2)+((Player.y-this.y)**2))
+        if(distance <= 200&& this.CanAttack){
+            this.CanAttack = false
+            this.AttackClaw(Player)
+        }else if(distance >= 300 && this.CanAttack){
+            const randAttack = Math.floor(Math.random() * 2)
+            if(randAttack == 0){
+                this.CanAttack = false
+                this.MeteorNB = 0
+                this.Defense = 10
+                this.AttackMeteor(Player)
+            }else {
+                this.velocity = this.velocity*4
+                this.CanAttack = false
+                setTimeout(() => {
+                    this.velocity = this.BasicVelocity
+                    this.CanAttack = true
+                }, 300);
+            }
+
+        }
+    }
     Attacked(amount,Player){
-        this.Health -= amount /3 // /3
+        this.Health -= amount / this.Defense // /3
+        console.log(amount / this.Defense)
         this.updateHealthBar()
         if(this.Health <= 0){
             this.Health = 0
@@ -176,16 +214,105 @@ export class Ganon extends Physics.Arcade.Image {
                     }, 2000);
                     break;
                 case 2:
+                    this.Health = 100
+                    this.updateHealthBar()
                     this.phase = 3;
+                    this.Defense = 5
                     console.log("Phase 3 ou quoi la")
+                    Player.weapon = "spear"
                     setTimeout(() => {
-                        this.Health = 100
-                        this.updateHealthBar()
-                        Player.weapon = "spear"
+                        this.invincibility = false
+                        
                         // this.SecondPhase()
                     }, 2000);
                     break;
+                case 3:
+                    this.scene.scene.start("menu")
+                    break;
             }
         }
+    }
+    AttackClaw(Player){
+        this.CanAttack = false
+        const attackRadius = 150 // Radius of the attack arc
+        const angleToMouse = Phaser.Math.Angle.Between(this.x, this.y, Player.x, Player.y)
+        const halfArcAngle = Phaser.Math.DegToRad(45) // Half the angle of the quarter circle (45 degrees)
+        
+        const graphics = this.scene.add.graphics()
+        graphics.lineStyle(10, 0xffa500)
+        graphics.beginPath()
+        graphics.arc(this.x, this.y, attackRadius, angleToMouse - halfArcAngle, angleToMouse + halfArcAngle, false)
+        graphics.strokePath()
+        this.velocity = 0
+        setTimeout(() => {
+            graphics.clear()
+
+            graphics.lineStyle(10, 0xff0000)
+            graphics.beginPath()
+            graphics.arc(this.x, this.y, attackRadius, angleToMouse - halfArcAngle, angleToMouse + halfArcAngle, false)
+            graphics.strokePath()
+            const distanceToEnemy = Phaser.Math.Distance.Between(this.x, this.y, Player.x, Player.y)
+            const angleToEnemy = Phaser.Math.Angle.Between(this.x, this.y, Player.x, Player.y)
+            const isWithinArc = Phaser.Math.Angle.ShortestBetween(angleToMouse, angleToEnemy) <= halfArcAngle
+            if (distanceToEnemy <= attackRadius+20 && isWithinArc) {
+                Player.GetAttacked(3)
+                // Player.IsAttacked(2);
+            }
+            setTimeout(() => {
+                graphics.destroy()
+                this.velocity = this.BasicVelocity
+                setTimeout(() => {
+                    this.CanAttack = true
+                    
+                }, 700);
+            }, 100);
+        },400)
+    }
+    AttackMeteor(Player){
+        this.MeteorNB++
+        const FireRadius = 100
+        const graphics = this.scene.add.graphics()
+        let FireX = Player.x
+        let FireY = Player.y
+        this.velocity = 0
+        graphics.lineStyle(1, 0xffa500)
+        graphics.fillStyle(0xffa500);
+        graphics.alpha = 0.5;
+        graphics.beginPath()
+        graphics.arc(FireX, FireY, FireRadius, 0, 2 * Math.PI, false);
+        graphics.closePath()
+        graphics.strokePath()
+        graphics.fill()
+        
+        setTimeout(() => {
+            graphics.clear()
+
+
+            graphics.lineStyle(1, 0xff0000)
+            graphics.fillStyle(0xff0000);
+            graphics.beginPath()
+            graphics.arc(FireX, FireY, FireRadius, 0, 2 * Math.PI, false);
+            graphics.closePath()
+            graphics.strokePath()
+            graphics.fill()
+            const distance = Phaser.Math.Distance.Between(Player.x, Player.y, FireX, FireY);
+            if(distance  <= FireRadius){
+                Player.GetAttacked(1)
+            }
+            setTimeout(() => {
+                graphics.destroy()
+                this.velocity = this.BasicVelocity
+                if(this.MeteorNB <= 5){
+                    this.AttackMeteor(Player)
+                }else {
+                    setTimeout(() => {
+                        this.CanAttack = true
+                        this.Defense = 5;
+                    }, 700);
+                }
+
+                
+            }, 200);
+        }, 500);
     }
 }

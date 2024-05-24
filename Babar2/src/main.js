@@ -19,12 +19,13 @@ var config = {
     width: 960,
     height: 540,
     scene: [
-        
+       
         MenuScene,
         Shop,
         GameScene,
         GameOverScene,
         BossScene
+        
     ],
     physics: {
         default: 'arcade',

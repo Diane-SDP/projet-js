@@ -99,6 +99,9 @@ export class BossScene extends Scene {
     }
     update(){
         if(this.Ganon.phase != 2){
+            if(this.Ganon.phase == 3){
+                this.Ganon.MoveGanon(this.player)
+            }
             for(var i = 0 ; i < this.Ennemies.length;i++){
                 if(this.Ennemies[i] !== undefined){
                     this.Ennemies[i].update(this.player)
