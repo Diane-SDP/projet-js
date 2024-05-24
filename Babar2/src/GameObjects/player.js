@@ -155,6 +155,12 @@ export class Player extends Physics.Arcade.Sprite {
                         this.MazeY--;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
                         this.actualroom = this.Maze[this.MazeY][this.MazeX].special
+                        for (let i=0; i<this.scene.walls.length; i++) {
+                            console.log("destroy")
+                            this.scene.walls[i].destroy()
+                        }
+                        this.scene.walls = []
+                        this.scene.checkWalls()
                         this.SpecialRoom()
                     }
                 }
@@ -168,7 +174,12 @@ export class Player extends Physics.Arcade.Sprite {
                         this.MazeY++;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
                         this.actualroom = this.Maze[this.MazeY][this.MazeX].special
-
+                        for (let i=0; i<this.scene.walls.length; i++) {
+                            console.log("destroy")
+                            this.scene.walls[i].destroy()
+                        }
+                        this.scene.walls = []
+                        this.scene.checkWalls()
                         this.SpecialRoom()
 
                     }
@@ -183,7 +194,12 @@ export class Player extends Physics.Arcade.Sprite {
                         this.MazeX--;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
                         this.actualroom = this.Maze[this.MazeY][this.MazeX].special
-
+                        for (let i=0; i<this.scene.walls.length; i++) {
+                            console.log("destroy")
+                            this.scene.walls[i].destroy()
+                        }
+                        this.scene.walls = []
+                        this.scene.checkWalls()
                         this.SpecialRoom()
                     }
                 }
@@ -198,6 +214,12 @@ export class Player extends Physics.Arcade.Sprite {
                         this.MazeX++;
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
                         this.actualroom = this.Maze[this.MazeY][this.MazeX].special
+                        for (let i=0; i<this.scene.walls.length; i++) {
+                            console.log("destroy")
+                            this.scene.walls[i].destroy()
+                        }
+                        this.scene.walls = []
+                        this.scene.checkWalls()
                         this.SpecialRoom()
                     }
                 }
@@ -213,7 +235,8 @@ export class Player extends Physics.Arcade.Sprite {
         }
         switch(this.Maze[this.MazeY][this.MazeX].special){
             case "key":
-                this.key = this.scene.add.image(960/2, 540/2, "key").setOrigin(0.5, 0.5).setScale(0.08)                
+                this.key = this.scene.add.image(960/2, 540/2, "key").setOrigin(0.5, 0.5).setScale(0.08) 
+                this.scene.setBackground("BG")                
                 break
             case "water":
                 this.scene.setBackground("waterBG")  
