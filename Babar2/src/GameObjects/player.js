@@ -19,24 +19,23 @@ export class Player extends Physics.Arcade.Sprite {
     oldDirection = ""
     actualroom =""
     weapon = ""
-    constructor({scene, weapon}) {
+    constructor({scene, weapon, attackBonus, heartBonus}) {
 
         super(scene, 200, 100, "player");
         this.CanDash = true
         this.CanAttack = true
         this.scene = scene;
         this.Maze = []
-        this.bokoblin = null
         this.weapon = weapon
         this.getkey = false
         switch(this.weapon){
             case "spear":
-                this.AttackDamage = 10
+                this.AttackDamage = 10 * (0.4 * (attackBonus + 1))
                 break;
             case "sword":
-                this.AttackDamage = 20
+                this.AttackDamage = 20 * (0.4 * (attackBonus + 1))
         }
-        this.Health = 10//10 demi coeurs pour 5 coeurs
+        this.Health = 10 + heartBonus*2
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
     }
@@ -210,7 +209,6 @@ export class Player extends Physics.Arcade.Sprite {
     }
     SpecialRoom(){
         if (this.Maze[this.MazeY][this.MazeX].heart == true) {
-            console.log("met un coeur pute")
             this.heart = this.scene.add.image(960/2, 540/2, "FullHeart").setOrigin(0.5, 0.5).setScale(0.08)    
         }
         switch(this.Maze[this.MazeY][this.MazeX].special){
@@ -347,7 +345,7 @@ export class Player extends Physics.Arcade.Sprite {
         }
         this.HealthBar= []
         var life = this.Health;
-        for(var i = 0 ; i < 5 ; i++){
+        for(var i = 0 ; i < this.Health/2 ; i++){
             if(life >= 2){
                 var Heart = this.scene.add.image(0+55*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)
                 this.HealthBar.push(Heart)

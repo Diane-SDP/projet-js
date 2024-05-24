@@ -62,7 +62,7 @@ export class GameScene extends Scene {
         this.resetGame()
         this.setBackground("BG")
 
-        this.player = new Player({ scene: this, weapon: this.selectedWeapon })
+        this.player = new Player({ scene: this, weapon: this.selectedWeapon, attackBonus: global.nbWeaponBonus, heartBonus: global.nbHeartBonus })
         this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
         
         // this.bokoblin.setScale(0.75)
