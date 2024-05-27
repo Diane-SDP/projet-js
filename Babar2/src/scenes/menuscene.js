@@ -35,9 +35,6 @@ export class MenuScene extends Scene {
         startButton.on('pointerdown', () => this.scene.start("shop"))
         // this.scene.start("game");
     }
-    update(){
-
-    }
 
 
 }

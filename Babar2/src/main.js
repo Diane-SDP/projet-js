@@ -24,8 +24,8 @@ var config = {
         Shop,
         GameScene,
         GameOverScene,
-        BossScene
-        
+        BossScene,
+        Credits
         
     ],
     physics: {
