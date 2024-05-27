@@ -214,7 +214,7 @@ export class Player extends Physics.Arcade.Sprite {
                 break;
             case "right":
                 if(this.MazeX == 9 && this.MazeY == 9 && this.getkey){
-                    this.scene.scene.start("boss")
+                    this.scene.scene.start("BossScene", {weapon: this.weapon, AttackDamage: this.AttackDamage, health: this.MaxHealth})
                 }else if(this.MazeX != this.MazeMaxX-1){
                     if(this.Maze[this.MazeY][this.MazeX+1].wall == false){
                         this.x = 0+this.size
