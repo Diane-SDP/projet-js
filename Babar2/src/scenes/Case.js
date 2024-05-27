@@ -12,16 +12,17 @@ export class Case {
     } 
 
     checkEnnemies() {
-        console.log(this.Ennemies)
         if (this.Ennemies.length == 0) {
+            console.log("je return false prk ennemi lenght = 0")
             return false
         }
         for (let i = 0; i < this.Ennemies.length; i++ ) {
             if ((this.Ennemies[i] != undefined) &&(this.Ennemies[i] != null)){
+                console.log("je return false")
                 return false
             }
         }
-        console.log("faut un coeur là")
+        console.log("je return true")
         this.heart = true
         return true
     }

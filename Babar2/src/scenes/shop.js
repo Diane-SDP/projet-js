@@ -34,9 +34,24 @@ export class Shop extends Phaser.Scene {
             .setInteractive();
         validateButton.on('pointerdown', () => this.validateSelection());
         this.coinsText = this.add.text(this.cameras.main.width - 20, 20, `Coins: ${global.coin}`, { fontSize: '24px', fill: '#FFF' })
-            .setOrigin(1, 0);
-        this.updateCoinsText();
+            .setOrigin(1, 0)
+        this.updateCoinsText()
         this.UpgradeButtons()
+        let cheatCode = ''
+        const cheatCodeTarget = 'kevin'
+        this.input.keyboard.on('keydown', (event) => {
+            cheatCode += event.key
+        
+            if (cheatCode.includes(cheatCodeTarget)) {
+                console.log('CHEAT')
+                cheatCode = ''
+                global.coin += 100
+                this.updateCoinsText()
+                this.UpgradeButtons()
+            } else if (cheatCode.length > cheatCodeTarget.length) {
+                cheatCode = cheatCode.substring(1);
+            }
+        });
     }
 
     selectWeapon(weapon) {
@@ -63,30 +78,33 @@ export class Shop extends Phaser.Scene {
         const weaponUpgradeCost = 25 + 5 * global.nbWeaponBonus;
         const heartUpgradeCost = 30;
 
-        this.upgradeWeapon = this.add.text(this.cameras.main.width / 2, 3 * this.cameras.main.height / 4 + 50, `Upgrade Attack (${weaponUpgradeCost} coins)`, { fontSize: '24px', fill: '#FFF' })
+        if (this.upgradeWeapon == "" && this.upgradeHeart == "") {
+            this.upgradeWeapon = this.add.text(this.cameras.main.width / 2, 3 * this.cameras.main.height / 4 + 50, `Upgrade Attack (${weaponUpgradeCost} coins)`, { fontSize: '24px', fill: '#FFF' })
             .setOrigin(0.5)
             .setInteractive()
-        this.upgradeHeart = this.add.text(this.cameras.main.width / 2, 3 * this.cameras.main.height / 4 + 100, `Add Heart (${heartUpgradeCost} coins)`, { fontSize: '24px', fill: '#FFF' })
-            .setOrigin(0.5)
-            .setInteractive()
+            this.upgradeHeart = this.add.text(this.cameras.main.width / 2, 3 * this.cameras.main.height / 4 + 100, `Add Heart (${heartUpgradeCost} coins)`, { fontSize: '24px', fill: '#FFF' })
+                .setOrigin(0.5)
+                .setInteractive()
+            this.upgradeWeapon.on('pointerdown', () => {
+                    if (global.coin >= weaponUpgradeCost && global.nbWeaponBonus < 5) {
+                        global.coin -= weaponUpgradeCost
+                        global.nbWeaponBonus += 1
+                        this.updateUpgrades()
+                    }
+                });
+        
+            this.upgradeHeart.on('pointerdown', () => {
+                    if (global.coin >= heartUpgradeCost && global.nbHeartBonus < 5) {
+                        global.coin -= heartUpgradeCost
+                        global.nbHeartBonus += 1
+                        this.updateUpgrades()
+                    }
+                });
+        }
 
         this.updateUpgrades();
 
-        this.upgradeWeapon.on('pointerdown', () => {
-            if (global.coin >= weaponUpgradeCost && global.nbWeaponBonus < 5) {
-                global.coin -= weaponUpgradeCost
-                global.nbWeaponBonus += 1
-                this.updateUpgrades()
-            }
-        });
-
-        this.upgradeHeart.on('pointerdown', () => {
-            if (global.coin >= heartUpgradeCost && global.nbHeartBonus < 5) {
-                global.coin -= heartUpgradeCost
-                global.nbHeartBonus += 1
-                this.updateUpgrades()
-            }
-        });
+        
     }
 
     updateUpgrades() {

@@ -8,7 +8,7 @@ export class GameOverScene extends Scene {
     }
     create(){
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
-        const style = { 
+        var style = { 
             fontFamily: '"BOTW"',
             fontSize: '32px',
             fill: '#f00'

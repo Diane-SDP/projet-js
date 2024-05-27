@@ -44,10 +44,8 @@ export class Ganon extends Physics.Arcade.Image {
             }else {
                 const distance = Phaser.Math.Distance.Between(this.Bullet.x, this.Bullet.y, this.x, this.y);
                 if (distance < 40) {
-                    console.log("Bullet on ganon")
                     this.Bullet.destroy();
                     if(this.Bulletnb >= 6){
-                        console.log("ouch")
                         this.Bulletnb = 0;
                         this.Bullet = null
                         this.BulletGanon = true
@@ -200,7 +198,6 @@ export class Ganon extends Physics.Arcade.Image {
                 case 1:
                     this.invincibility = true
                     this.phase = 2
-                    console.log("Phase 2 ou quoi la")
                     //transition
                     Player.x = 480
                     Player.y = 400
@@ -218,9 +215,9 @@ export class Ganon extends Physics.Arcade.Image {
                     this.updateHealthBar()
                     this.phase = 3;
                     this.Defense = 5
+                    Player.weapon = Player.selectedWeapon
                     this.setTexture("GanonAzad")
                     console.log("Phase 3 ou quoi la")
-                    Player.weapon = "spear"
                     setTimeout(() => {
                         this.invincibility = false
                         
@@ -311,6 +308,7 @@ export class Ganon extends Physics.Arcade.Image {
                         this.Defense = 5;
                     }, 700);
                 }
+     
             }, 200);
         }, 500);
     }
