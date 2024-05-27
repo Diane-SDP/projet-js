@@ -166,6 +166,7 @@ export class Player extends Physics.Arcade.Sprite {
                             case "octorok":
                                 global.coin += 1
                         }
+                        this.scene.DisplayRubis()
                         ennemy[i].deactivate()
                         delete ennemy[i]
                         if(this.checkEnnemies(ennemy)){
@@ -221,6 +222,7 @@ export class Player extends Physics.Arcade.Sprite {
                             case "octorok":
                                 global.coin += 1
                         }
+                        this.scene.DisplayRubis()
                         ennemy[i].deactivate()
                         delete ennemy[i]
                         if(this.checkEnnemies(ennemy)){

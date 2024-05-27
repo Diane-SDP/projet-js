@@ -290,6 +290,13 @@ export class Player extends Physics.Arcade.Sprite {
                 if (isWithinDistance && isWithinWidth && isWithinArc) {
                     ennemy[i].IsAttacked(this.AttackDamage);
                     if(ennemy[i].Health <= 0){
+                        switch(ennemy[i].type){
+                            case "bokoblin":
+                                global.coin += 3
+                            case "octorok":
+                                global.coin += 1
+                        }
+                        this.scene.DisplayRubis()
                         console.log(this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
@@ -335,6 +342,7 @@ export class Player extends Physics.Arcade.Sprite {
                             case "octorok":
                                 global.coin += 1
                         }
+                        this.scene.DisplayRubis()
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
                         console.log("coordonnées :",this.MazeX, this.MazeY)
