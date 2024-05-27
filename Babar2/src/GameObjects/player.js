@@ -6,7 +6,7 @@ import {global} from "../main"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 50;
+    velocity = 40;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -128,13 +128,15 @@ export class Player extends Physics.Arcade.Sprite {
                 this.key.destroy();
                 this.getkey = true
             }
-        } else if(this.Maze[this.MazeY][this.MazeX].heart === true){
-            if(this.x > 960/2-20 && this.x < 960/2+20 && this.y > 540/2-20 && this.y < 540/2+20){
+        } else if(this.Maze[this.MazeX][this.MazeY].heart === true){
+            console.log("y'a un coeur à recup")
+            if(this.x > 960/2-40 && this.x < 960/2+40 && this.y > 540/2-40 && this.y < 540/2+40){
+                console.log("pickup now")
                 this.heart.destroy();
-                this.Maze[this.MazeY][this.MazeX].heart = false
+                this.Maze[this.MazeX][this.MazeY].heart = false
                 this.Health += 2
-                if (this.Health > 10) {
-                    this.Health = 10
+                if (this.Health > this.MaxHealth) {
+                    this.Health = this.MaxHealth
                 }
                 this.UpdateHealth()
             }
@@ -157,7 +159,6 @@ export class Player extends Physics.Arcade.Sprite {
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
                         this.actualroom = this.Maze[this.MazeY][this.MazeX].special
                         for (let i=0; i<this.scene.walls.length; i++) {
-                            console.log("destroy")
                             this.scene.walls[i].destroy()
                         }
                         this.scene.walls = []
@@ -176,7 +177,6 @@ export class Player extends Physics.Arcade.Sprite {
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
                         this.actualroom = this.Maze[this.MazeY][this.MazeX].special
                         for (let i=0; i<this.scene.walls.length; i++) {
-                            console.log("destroy")
                             this.scene.walls[i].destroy()
                         }
                         this.scene.walls = []
@@ -196,7 +196,6 @@ export class Player extends Physics.Arcade.Sprite {
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
                         this.actualroom = this.Maze[this.MazeY][this.MazeX].special
                         for (let i=0; i<this.scene.walls.length; i++) {
-                            console.log("destroy")
                             this.scene.walls[i].destroy()
                         }
                         this.scene.walls = []
@@ -230,8 +229,8 @@ export class Player extends Physics.Arcade.Sprite {
 
     }
     SpecialRoom(){
-        if (this.Maze[this.MazeY][this.MazeX].heart == true) {
-            this.heart = this.scene.add.image(960/2, 540/2, "FullHeart").setOrigin(0.5, 0.5).setScale(0.08)    
+        if (this.Maze[this.MazeX][this.MazeY].heart == true) {
+            this.heart = this.scene.add.image(960/2, 540/2, "FullHeart").setOrigin(0.5, 0.5).setScale(0.2)  
         }
         switch(this.Maze[this.MazeY][this.MazeX].special){
             case "key":
@@ -286,6 +285,8 @@ export class Player extends Physics.Arcade.Sprite {
                         console.log(this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
+                        console.log("coordonnées :",this.MazeX, this.MazeY)
+                        console.log("actual ennemies : ", this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
                         this.scene.Maze[this.MazeX][this.MazeY].checkEnnemies()
                         this.SpecialRoom()
                     }
@@ -328,7 +329,9 @@ export class Player extends Physics.Arcade.Sprite {
                         }
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
-                        this.scene.Maze[this.MazeY][this.MazeX].checkEnnemies()
+                        console.log("coordonnées :",this.MazeX, this.MazeY)
+                        console.log("actual ennemies : ", this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
+                        this.scene.Maze[this.MazeX][this.MazeY].checkEnnemies()
                         this.SpecialRoom()
                     }       
                 }
@@ -367,20 +370,21 @@ export class Player extends Physics.Arcade.Sprite {
             this.HealthBar[i].destroy()
         }
         this.HealthBar= []
-        var life = this.Health;
-        for(var i = 0 ; i < this.Health/2 ; i++){
+        var life = this.Health
+        console.log(life)
+        for(var i = 0 ; i < this.MaxHealth ; i+=2){
             if(life >= 2){
-                var Heart = this.scene.add.image(0+55*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)
+                var Heart = this.scene.add.image(0+22.5*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)
                 this.HealthBar.push(Heart)
                 life -=2
             }else if(life == 1){
-                var Heart =this.scene.add.image(0+55*i,2,"MidHeart").setOrigin(0, 0).setScale(0.20)
+                var Heart =this.scene.add.image(0+22.5*i,2,"MidHeart").setOrigin(0, 0).setScale(0.20)
                 this.HealthBar.push(Heart)
-                life-=1
+                life--
             }else {
-                var Heart =this.scene.add.image(0+55*i,2,"EmptyHeart").setOrigin(0, 0).setScale(0.20)
-                this.HealthBar.push(Heart)
-            }
+                 var Heart =this.scene.add.image(0+22.5*i,2,"EmptyHeart").setOrigin(0, 0).setScale(0.20)
+                 this.HealthBar.push(Heart)
+             }
         }
     }
 }

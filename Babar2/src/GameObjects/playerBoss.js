@@ -22,8 +22,10 @@ export class Player extends Physics.Arcade.Sprite {
     
         this.bokoblin = null
         this.weapon = weapon
+        this.selectedWeapon = weapon
         this.AttackDamage = AttackDamage
         this.Health = Health
+        this.MaxHealth = Health
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
     }
@@ -181,7 +183,6 @@ export class Player extends Physics.Arcade.Sprite {
             const isWithinWidth = Math.abs(distanceToEnemy * Math.sin(angleDifference)) <= attackWidth+30 / 2;
             const isWithinArc = Math.abs(angleDifference) <= Phaser.Math.DegToRad(45);
             if (isWithinDistance && isWithinWidth && isWithinArc) {
-                console.log("ouch ganon")
                 Ganon.Attacked(this.AttackDamage,this)
             }
         }
@@ -271,8 +272,9 @@ export class Player extends Physics.Arcade.Sprite {
             this.HealthBar[i].destroy()
         }
         this.HealthBar= []
-        var life = this.Health;
-        for(var i = 0 ; i < life ; i++){
+        var life = this.Health
+        console.log(life)
+        for(var i = 0 ; i < this.MaxHealth ; i++){
             if(life >= 2){
                 var Heart = this.scene.add.image(0+55*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)
                 this.HealthBar.push(Heart)
@@ -280,7 +282,7 @@ export class Player extends Physics.Arcade.Sprite {
             }else if(life == 1){
                 var Heart =this.scene.add.image(0+55*i,2,"MidHeart").setOrigin(0, 0).setScale(0.20)
                 this.HealthBar.push(Heart)
-                life-=1
+                life--
             }else {
                 var Heart =this.scene.add.image(0+55*i,2,"EmptyHeart").setOrigin(0, 0).setScale(0.20)
                 this.HealthBar.push(Heart)

@@ -102,7 +102,6 @@ export class GameScene extends Scene {
         const tileSize = 50; 
         const generator = new LabyrinthGenerator(width, height);
         this.Maze = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur (taille : 10x10)
-        console.log(this.Maze)
         // this.Maze = [
         //     ["X","X","O","X"],
         //     ["O","X","O","X"],
@@ -151,7 +150,6 @@ export class GameScene extends Scene {
             for(var j = 0 ; j < this.Maze.length;j++){
                 if (!this.Maze[j][i].wall && this.Maze[j][i].special != "key"){
                     var nbEnnemy = Math.floor(Math.random() * 3)+1
-                    console.log(nbEnnemy)
                     for(var k = 0 ; k < nbEnnemy;k++){
                         var WhichMob = Math.floor(Math.random() * 100)
                         if(WhichMob < 30){
@@ -195,7 +193,7 @@ export class GameScene extends Scene {
         if (this.keys.TAB.isDown) {
             console.log("TAB")
             //this.displayMap();
-            this.displayMap()
+            this.displayFullMap()
         } else {
             if (this.mapGraphics != null) {
                 this.hideMap()
@@ -208,7 +206,6 @@ export class GameScene extends Scene {
     }
 
     displayWalls(position) { 
-        console.log("walls : ", this.walls)
         switch (position) {
             case "up" :
                 this.walls.push(this.add.image(0, 0, "wall").setOrigin(0, 0).setDisplaySize(960, 50))
