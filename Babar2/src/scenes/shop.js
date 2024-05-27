@@ -5,11 +5,7 @@ import {global} from "../main"
 export class Shop extends Phaser.Scene {
     constructor() {
         super('shop');
-        this.selectedWeapon = null;
-        this.sword = ""
-        this.spear = ""
-        this.upgradeWeapon = ""
-        this.upgradeHeart = ""
+        
     }
 
     preload() {
@@ -18,7 +14,7 @@ export class Shop extends Phaser.Scene {
     }
 
     create() {
-
+        this.resetShop()
         this.sword = this.add.image(this.cameras.main.width / 3, this.cameras.main.height / 2, 'sword')
         .setInteractive()
         .setScale(0.4)
@@ -43,7 +39,6 @@ export class Shop extends Phaser.Scene {
             cheatCode += event.key
         
             if (cheatCode.includes(cheatCodeTarget)) {
-                console.log('CHEAT')
                 cheatCode = ''
                 global.coin += 100
                 this.updateCoinsText()
@@ -63,22 +58,28 @@ export class Shop extends Phaser.Scene {
             this.sword.setScale(0.4)
             this.spear.setScale(0.09)
         }
-        console.log("arme choisie : ", weapon)
     }
 
     validateSelection() {
         if (this.selectedWeapon) {
             this.scene.start('game', { weapon: this.selectedWeapon });
         } else {
-            console.log('No weapon selected!');
         }
+    }
+
+    resetShop() {
+        this.selectedWeapon = null
+        this.sword = ""
+        this.spear = ""
+        this.upgradeWeapon = null
+        this.upgradeHeart = null
     }
 
     UpgradeButtons() {
         const weaponUpgradeCost = 25 + 5 * global.nbWeaponBonus;
         const heartUpgradeCost = 30;
 
-        if (this.upgradeWeapon == "" && this.upgradeHeart == "") {
+        if (this.upgradeWeapon == null  && this.upgradeHeart == null) {
             this.upgradeWeapon = this.add.text(this.cameras.main.width / 2, 3 * this.cameras.main.height / 4 + 50, `Upgrade Attack (${weaponUpgradeCost} coins)`, { fontSize: '24px', fill: '#FFF' })
             .setOrigin(0.5)
             .setInteractive()

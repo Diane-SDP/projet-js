@@ -33,7 +33,6 @@ export class MenuScene extends Scene {
         startButton.on('pointerover', () => { startButton.setFill("#f00") });
         startButton.on('pointerout', () => { startButton.setFill("#bbb") });
         startButton.on('pointerdown', () => this.scene.start("shop"))
-        // this.scene.start("game");
     }
 
 

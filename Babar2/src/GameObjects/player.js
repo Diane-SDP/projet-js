@@ -137,9 +137,7 @@ export class Player extends Physics.Arcade.Sprite {
                 this.getkey = true
             }
         } else if(this.Maze[this.MazeX][this.MazeY].heart === true){
-            console.log("y'a un coeur à recup")
             if(this.x > 960/2-40 && this.x < 960/2+40 && this.y > 540/2-40 && this.y < 540/2+40){
-                console.log("pickup now")
                 this.heart.destroy();
                 this.Maze[this.MazeX][this.MazeY].heart = false
                 this.Health += 2
@@ -286,7 +284,7 @@ export class Player extends Physics.Arcade.Sprite {
                 const angleDifference = Phaser.Math.Angle.Wrap(angleToEnemy - angleToPlayer);
                 const isWithinDistance = distanceToEnemy <= attackHeight;
                 const isWithinWidth = Math.abs(distanceToEnemy * Math.sin(angleDifference)) <= attackWidth+30 / 2;
-                const isWithinArc = Math.abs(angleDifference) <= Phaser.Math.DegToRad(45); // 45 degrees arc
+                const isWithinArc = Math.abs(angleDifference) <= Phaser.Math.DegToRad(45); 
                 if (isWithinDistance && isWithinWidth && isWithinArc) {
                     ennemy[i].IsAttacked(this.AttackDamage);
                     if(ennemy[i].Health <= 0){
@@ -299,11 +297,8 @@ export class Player extends Physics.Arcade.Sprite {
                                 break
                         }
                         this.scene.DisplayRubis()
-                        console.log(this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
-                        console.log("coordonnées :",this.MazeX, this.MazeY)
-                        console.log("actual ennemies : ", this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
                         this.scene.Maze[this.MazeX][this.MazeY].checkEnnemies()
                         this.SpecialRoom()
                     }
@@ -320,9 +315,9 @@ export class Player extends Physics.Arcade.Sprite {
         }, 50);
     }
     AttackSword(mouseX,mouseY,ennemy) {
-        const attackRadius = 175 // Radius of the attack arc
+        const attackRadius = 175 
         const angleToMouse = Phaser.Math.Angle.Between(this.x, this.y, mouseX, mouseY)
-        const halfArcAngle = Phaser.Math.DegToRad(30) // Half the angle of the quarter circle (45 degrees)
+        const halfArcAngle = Phaser.Math.DegToRad(30)
         
         const graphics = this.scene.add.graphics()
         graphics.lineStyle(2, 0xff0000)
@@ -349,8 +344,6 @@ export class Player extends Physics.Arcade.Sprite {
                         this.scene.DisplayRubis()
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()
                         delete this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i]
-                        console.log("coordonnées :",this.MazeX, this.MazeY)
-                        console.log("actual ennemies : ", this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
                         this.scene.Maze[this.MazeX][this.MazeY].checkEnnemies()
                         this.SpecialRoom()
                     }       
@@ -392,7 +385,6 @@ export class Player extends Physics.Arcade.Sprite {
         }
         this.HealthBar= []
         var life = this.Health
-        console.log(life)
         for(var i = 0 ; i < this.MaxHealth ; i+=2){
             if(life >= 2){
                 var Heart = this.scene.add.image(0+23*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)

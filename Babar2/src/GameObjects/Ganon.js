@@ -57,7 +57,6 @@ export class Ganon extends Physics.Arcade.Image {
                             this.SecondPhase()
                         }, 2000);
                     }else {
-                        console.log("Ganon return")
                         this.BulletGanon = true
                         this.BulletSpeed +=75
                         this.LaunchBullet(this.BulletSpeed)
@@ -107,7 +106,6 @@ export class Ganon extends Physics.Arcade.Image {
         this.Bulletnb++
         const angleToPlayer = Phaser.Math.Angle.Between(this.x, this.y, 480, 400)
         const sprite = "bullet"+(this.Bulletnb)
-        console.log(sprite)
         const projectile = this.scene.physics.add.sprite(this.x, this.y, sprite).setScale(0.3);
         projectile.displayWidth = 80;
         projectile.displayHeight = 80;
@@ -126,10 +124,8 @@ export class Ganon extends Physics.Arcade.Image {
         this.BulletGanon = false;
         this.Bulletnb++
         
-        console.log("return bullet : ",this.Bulletnb)
         const angleToPlayer = Phaser.Math.Angle.Between(480, 400, this.x, this.y)
         const sprite = "bullet"+(this.Bulletnb)
-        console.log(sprite)
 
         const projectile = this.scene.physics.add.sprite(480, 400, sprite).setScale(0.3);
         projectile.displayWidth = 80;
@@ -143,7 +139,6 @@ export class Ganon extends Physics.Arcade.Image {
         );
     }
     DestroyShield(){
-        console.log("ouch")
         this.invincibility = false
         this.setTexture("ganon1")
         setTimeout(() => {
@@ -189,8 +184,7 @@ export class Ganon extends Physics.Arcade.Image {
         }
     }
     Attacked(amount,Player){
-        this.Health -= amount / this.Defense // /3
-        console.log(amount / this.Defense)
+        this.Health -= amount / this.Defense 
         this.updateHealthBar()
         if(this.Health <= 0){
             this.Health = 0
@@ -199,7 +193,6 @@ export class Ganon extends Physics.Arcade.Image {
                 case 1:
                     this.invincibility = true
                     this.phase = 2
-                    //transition
                     Player.x = 480
                     Player.y = 400
                     this.setTexture("ganon1GROUND")
@@ -211,7 +204,6 @@ export class Ganon extends Physics.Arcade.Image {
                         setTimeout(() => {
                             this.setTexture("GanonAzadW")
                             setTimeout(() => {
-                                console.log("Phase 3 ou quoi la")
                                 setTimeout(() => {
                                     this.SecondPhase()
                                 }, 2000);
@@ -231,7 +223,6 @@ export class Ganon extends Physics.Arcade.Image {
                         this.setTexture("GanonAzadW")
                         setTimeout(() => {
                             this.setTexture("GanonAzad")
-                            console.log("Phase 3 ou quoi la")
                             setTimeout(() => {
                                 this.invincibility = false
                             }, 2000);
@@ -269,9 +260,9 @@ export class Ganon extends Physics.Arcade.Image {
     }
     AttackClaw(Player){
         this.CanAttack = false
-        const attackRadius = 150 // Radius of the attack arc
+        const attackRadius = 150 
         const angleToMouse = Phaser.Math.Angle.Between(this.x, this.y, Player.x, Player.y)
-        const halfArcAngle = Phaser.Math.DegToRad(45) // Half the angle of the quarter circle (45 degrees)
+        const halfArcAngle = Phaser.Math.DegToRad(45) 
         
         const graphics = this.scene.add.graphics()
         graphics.lineStyle(10, 0xffa500)
@@ -291,7 +282,6 @@ export class Ganon extends Physics.Arcade.Image {
             const isWithinArc = Phaser.Math.Angle.ShortestBetween(angleToMouse, angleToEnemy) <= halfArcAngle
             if (distanceToEnemy <= attackRadius+20 && isWithinArc) {
                 Player.GetAttacked(3)
-                // Player.IsAttacked(2);
             }
             setTimeout(() => {
                 graphics.destroy()

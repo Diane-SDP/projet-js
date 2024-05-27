@@ -79,9 +79,9 @@ export class Player extends Physics.Arcade.Sprite {
         }
     }
     AttackMaster(mouseX,mouseY,Ganon){
-        const attackRadius = 100 // Radius of the attack arc
+        const attackRadius = 100
         const angleToMouse = Phaser.Math.Angle.Between(this.x, this.y, mouseX, mouseY)
-        const halfArcAngle = Phaser.Math.DegToRad(30) // Half the angle of the quarter circle (45 degrees)
+        const halfArcAngle = Phaser.Math.DegToRad(30) 
         
         const graphics = this.scene.add.graphics()
         graphics.lineStyle(2, 0xff0000)
@@ -96,31 +96,6 @@ export class Player extends Physics.Arcade.Sprite {
                 Ganon.ReturnBullet(Ganon.BulletSpeed+75)
             }
         }
-
-        // for(var i = 0 ; i < ennemy.length;i++){
-        //     if(ennemy[i]!= undefined){
-        //         const distanceToEnemy = Phaser.Math.Distance.Between(this.x, this.y, ennemy[i].x, ennemy[i].y)
-        //         const angleToEnemy = Phaser.Math.Angle.Between(this.x, this.y, ennemy[i].x, ennemy[i].y)
-        //         const isWithinArc = Phaser.Math.Angle.ShortestBetween(angleToMouse, angleToEnemy) <= halfArcAngle
-        //         if (distanceToEnemy <= attackRadius+20 && isWithinArc) {
-        //             ennemy[i].IsAttacked(this.AttackDamage);
-        //             if(ennemy[i].Health <= 0){
-        //                 switch(ennemy[i].type){
-        //                     case "bokoblin":
-        //                         global.coin += 3
-        //                     case "octorok":
-        //                         global.coin += 1
-        //                 }
-        //                 ennemy[i].deactivate()
-        //                 delete ennemy[i]
-        //                 if(this.checkEnnemies(ennemy)){
-        //                     Ganon.DestroyShield()
-        //                 }
-        //             }  
-                      
-        //         }
-        //     }
-        // }
         if(!Ganon.invincibility){
             const distanceToEnemy = Phaser.Math.Distance.Between(this.x, this.y, Ganon.x, Ganon.y)
             const angleToEnemy = Phaser.Math.Angle.Between(this.x, this.y, Ganon.x, Ganon.y)
@@ -200,9 +175,9 @@ export class Player extends Physics.Arcade.Sprite {
     }
     
     AttackSword(mouseX,mouseY,ennemy,Ganon) {
-        const attackRadius = 175 // Radius of the attack arc
+        const attackRadius = 175 
         const angleToMouse = Phaser.Math.Angle.Between(this.x, this.y, mouseX, mouseY)
-        const halfArcAngle = Phaser.Math.DegToRad(30) // Half the angle of the quarter circle (45 degrees)
+        const halfArcAngle = Phaser.Math.DegToRad(30) 
         
         const graphics = this.scene.add.graphics()
         graphics.lineStyle(2, 0xff0000)
@@ -277,18 +252,21 @@ export class Player extends Physics.Arcade.Sprite {
         }
         this.HealthBar= []
         var life = this.Health
-        console.log(life)
-        for(var i = 0 ; i < this.MaxHealth ; i++){
+        for(var i = 0 ; i < this.MaxHealth ; i+=2){
             if(life >= 2){
-                var Heart = this.scene.add.image(0+55*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)
+                var Heart = this.scene.add.image(0+23*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)
+                Heart.setDepth(1000);
                 this.HealthBar.push(Heart)
+                
                 life -=2
             }else if(life == 1){
-                var Heart =this.scene.add.image(0+55*i,2,"MidHeart").setOrigin(0, 0).setScale(0.20)
+                var Heart =this.scene.add.image(0+23*i,2,"MidHeart").setOrigin(0, 0).setScale(0.20)
+                Heart.setDepth(1000);
                 this.HealthBar.push(Heart)
                 life--
             }else {
-                var Heart =this.scene.add.image(0+55*i,2,"EmptyHeart").setOrigin(0, 0).setScale(0.20)
+                var Heart =this.scene.add.image(0+23*i,2,"EmptyHeart").setOrigin(0, 0).setScale(0.20)
+                Heart.setDepth(1000);
                 this.HealthBar.push(Heart)
             }
         }

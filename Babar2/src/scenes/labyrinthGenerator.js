@@ -13,16 +13,13 @@ export class LabyrinthGenerator {
     generateLabyrinth() {
         this.tracePath(0, 0) // génère le labyrinthe
         this.labyrinth[9][9].wall = false;
-        console.log(this.isResolvable())
         while (!this.isResolvable()) { //le régénère si besoin
             this.labyrinth = Array.from({ length: this.height }, () => Array.from({ length: this.width }, () => new Case()));
             this.tracePath(0, 0);
-            console.log(this.isResolvable())
         }
         
         this.GenerateSpecialRoom()
         this.setVisitedFalse()
-        // this.labyrinth[0][9].wall = true;
         return this.labyrinth
     }
     GenerateSpecialRoom(){
@@ -93,7 +90,6 @@ export class LabyrinthGenerator {
             const KeyX = Math.floor(Math.random() * (10));
             const KeyY = Math.floor(Math.random() * (10));
 
-            console.log(KeyX,KeyY)
             if(!this.labyrinth[KeyX][KeyY].wall){
                 found=true;
                 this.labyrinth[KeyX][KeyY].special = "key";

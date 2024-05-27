@@ -28,7 +28,6 @@ export class GameScene extends Scene {
         this.load.image('wall', './public/assets/wall.png')
         this.load.image('waterBG', './public/assets/waterBG.png')
         this.load.image('BG', './public/assets/BG.png')
-        // this.load.image("player",'./public/assets/player.png')
         this.load.image("bokoblin",'./public/assets/bokoblin.png')
         this.load.image("FullHeart",'./public/assets/HearthFull.png')
         this.load.image("MidHeart",'./public/assets/HearthMid.png')
@@ -37,7 +36,6 @@ export class GameScene extends Scene {
         this.load.image("rock",'./public/assets/rock.png')
         this.load.image("key","./public/assets/key.png")
         this.load.image("rubis","./public/assets/rubis.png")
-        // this.load.atlas('a-player', './public/assets/spriteSheets/player.png', './src/animations/spritePlayer.json');
         this.load.spritesheet('player', './public/assets/spriteSheets/player.png', {
             frameWidth: 120,
             frameHeight: 126
@@ -96,8 +94,6 @@ export class GameScene extends Scene {
             frameRate: 10,
             repeat: -1
         });
-        
-        // this.bokoblin.setScale(0.75)
 
 
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -132,13 +128,8 @@ export class GameScene extends Scene {
         const height = 10;
         const tileSize = 50; 
         const generator = new LabyrinthGenerator(width, height);
-        this.Maze = generator.generateLabyrinth(); //matrice avec 0 si c'est un sol, 1 si c'est un mur (taille : 10x10)
-        // this.Maze = [
-        //     ["X","X","O","X"],
-        //     ["O","X","O","X"],
-        //     ["O","X","O","X"],
-        //     ["X","X","X","X"]
-        // ]
+        this.Maze = generator.generateLabyrinth();
+
 
         this.player.Maze = this.Maze
         this.FillMonster()
@@ -207,7 +198,6 @@ export class GameScene extends Scene {
             }
         } 
         this.player.update();
-        // this.bokoblin.update();
         var direction = []
         if (this.cursors.up.isDown || this.keys.Z.isDown) {
             direction.push("up");
@@ -222,9 +212,9 @@ export class GameScene extends Scene {
             direction.push("left");
         }
         if (this.keys.TAB.isDown) {
-            console.log("TAB")
-            //this.displayMap();
             this.displayMap()
+            // Si vous voulez la map en entier dès le départ, avec emplacement des salles spéciales et de la clé :
+            // this.displayFullMap()
         } else {
             if (this.mapGraphics != null) {
                 this.hideMap()
@@ -400,19 +390,16 @@ export class GameScene extends Scene {
 
         if(global.coin >= 100){
             var rubisimage = this.add.image(800-30,5,"rubis").setOrigin(0, 0).setScale(0.1).setDepth(1000)
-            console.log("nb coin "+global.coin)
             var nbrubis = this.add.text(875-30,5,global.coin,style).setOrigin(0,0).setDepth(1000)
             this.rubis.push(rubisimage)
             this.rubis.push(nbrubis)
         }else if(global.coin >= 1000){
             var rubisimage = this.add.image(800-100,5,"rubis").setOrigin(0, 0).setScale(0.1).setDepth(1000)
-            console.log("nb coin "+global.coin)
             var nbrubis = this.add.text(875-100,5,global.coin,style).setOrigin(0,0).setDepth(1000)
             this.rubis.push(rubisimage)
             this.rubis.push(nbrubis)
         }else {
             var rubisimage = this.add.image(800,5,"rubis").setOrigin(0, 0).setScale(0.1).setDepth(1000)
-            console.log("nb coin "+global.coin)
             var nbrubis = this.add.text(875,5,global.coin,style).setOrigin(0,0).setDepth(1000)
             this.rubis.push(rubisimage)
             this.rubis.push(nbrubis)

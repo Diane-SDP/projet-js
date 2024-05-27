@@ -44,8 +44,7 @@ export class Ennemy extends Physics.Arcade.Image {
         this.Move(this.Player)
         this.projectiles.forEach((projectile, index) => {
             const distance = Phaser.Math.Distance.Between(projectile.x, projectile.y, Player.x, Player.y);
-            if (distance < 40) { // Ajustez cette valeur selon vos besoins
-                // this.handleProjectileHit(Player, projectile);
+            if (distance < 40) {
                 Player.GetAttacked(1)
                 projectile.destroy();
                 this.projectiles.splice(index, 1);
@@ -59,7 +58,6 @@ export class Ennemy extends Physics.Arcade.Image {
         this.body.enable = true;
     }
 
-    // Méthode pour désactiver l'ennemi
     deactivate() {
         this.healthBar.clear()
         this.active = false;
@@ -164,9 +162,7 @@ export class Ennemy extends Physics.Arcade.Image {
         graphics.translateCanvas(this.x, this.y)
         graphics.rotateCanvas(angleToPlayer)
         graphics.fillRect(0, -attackWidth / 2, attackHeight, attackWidth)
-        // graphics.restoreCanvas()
     
-        // Create a temporary attack zone for collision detection
         const attackZone = this.scene.add.rectangle(this.x, this.y, attackHeight, attackWidth)
         this.scene.physics.world.enable(attackZone)
         attackZone.setOrigin(0.5, 0.5)
