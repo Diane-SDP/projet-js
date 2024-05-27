@@ -163,8 +163,10 @@ export class Player extends Physics.Arcade.Sprite {
                         switch(ennemy[i].type){
                             case "bokoblin":
                                 global.coin += 3
+                                break
                             case "octorok":
                                 global.coin += 1
+                                break
                         }
                         ennemy[i].deactivate()
                         delete ennemy[i]
@@ -218,8 +220,10 @@ export class Player extends Physics.Arcade.Sprite {
                         switch(ennemy[i].type){
                             case "bokoblin":
                                 global.coin += 3
+                                break
                             case "octorok":
                                 global.coin += 1
+                                break
                         }
                         ennemy[i].deactivate()
                         delete ennemy[i]

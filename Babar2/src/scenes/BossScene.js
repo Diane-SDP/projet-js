@@ -46,7 +46,7 @@ export class BossScene extends Scene {
         this.load.image("ganon2GROUND","./public/assets/Ganon/ganon2Ground.png")
 
         this.load.image("GanonAzad","./public/assets/Ganon/GanonFinal.png")
-
+        this.load.image("GanonAzadW","./public/assets/Ganon/GanonFinalW.png")
         // this.load.image("ganon2SHIELD","./public/assets/Ganon/ganon2SHIELD.png")
         // this.load.image("ganon2START","./public/assets/Ganon/ganon2START.png")
 
@@ -113,6 +113,9 @@ export class BossScene extends Scene {
 
     }
     update(){
+        if(this.Ganon.phase != 0){
+
+        
         if(this.Ganon.phase != 2){
             if(this.Ganon.phase == 3){
                 this.Ganon.MoveGanon(this.player)
@@ -142,6 +145,7 @@ export class BossScene extends Scene {
         }else{
             this.Ganon.update(this.player);
         }
+    }
 
         
         // this.sleep(3000).then(() => {

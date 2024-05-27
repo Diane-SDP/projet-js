@@ -37,7 +37,7 @@ export class Ganon extends Physics.Arcade.Image {
                     this.Bullet.y = 0
                     this.Bullet.destroy();
                     this.BulletGanon = false
-                    Player.GetAttacked(2)
+                    Player.GetAttacked(4)
                     this.Bulletnb = 0
                     setTimeout(() => {
                         this.SecondPhase()
@@ -60,7 +60,6 @@ export class Ganon extends Physics.Arcade.Image {
                         console.log("Ganon return")
                         this.BulletGanon = true
                         this.BulletSpeed +=75
-                        
                         this.LaunchBullet(this.BulletSpeed)
                     }
 
@@ -209,7 +208,17 @@ export class Ganon extends Physics.Arcade.Image {
                         this.Health = 100
                         this.updateHealthBar()
                         Player.weapon = "master"
-                        this.SecondPhase()
+                        setTimeout(() => {
+                            this.setTexture("GanonAzadW")
+                            setTimeout(() => {
+                                console.log("Phase 3 ou quoi la")
+                                setTimeout(() => {
+                                    this.SecondPhase()
+                                }, 2000);
+                            }, 300);
+    
+                        }, 300);
+                        
                     }, 2000);
                     break;
                 case 2:
@@ -218,16 +227,42 @@ export class Ganon extends Physics.Arcade.Image {
                     this.phase = 3;
                     this.Defense = 5
                     Player.weapon = Player.selectedWeapon
-                    this.setTexture("GanonAzad")
-                    console.log("Phase 3 ou quoi la")
                     setTimeout(() => {
-                        this.invincibility = false
-                        
-                        // this.SecondPhase()
-                    }, 2000);
+                        this.setTexture("GanonAzadW")
+                        setTimeout(() => {
+                            this.setTexture("GanonAzad")
+                            console.log("Phase 3 ou quoi la")
+                            setTimeout(() => {
+                                this.invincibility = false
+                            }, 2000);
+                        }, 300);
+
+                    }, 300);
+
                     break;
                 case 3:
-                    this.scene.scene.start("Credits")
+                    this.phase = 0;
+                    setTimeout(() => {
+                        this.setTexture("GanonAzadW")
+                        setTimeout(() => {
+                            this.setTexture("GanonAzad")
+                            setTimeout(() => {
+                                this.setTexture("GanonAzadW")
+                                setTimeout(() => {
+                                    this.setTexture("GanonAzad")
+                                    setTimeout(() => {
+                                        this.setTexture("GanonAzadW")
+                                        setTimeout(() => {
+                                            this.setTexture("GanonAzad")
+                                            this.scene.scene.start("Credits")
+                                        }, 300);
+                                    }, 300);
+                                }, 300);
+                            }, 300);
+                        }, 300);
+                        
+                    }, 300);
+                    
                     break;
             }
         }

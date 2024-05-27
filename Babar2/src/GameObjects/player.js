@@ -7,7 +7,7 @@ import {global} from "../main"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 40;
+    velocity = 10;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -293,8 +293,10 @@ export class Player extends Physics.Arcade.Sprite {
                         switch(ennemy[i].type){
                             case "bokoblin":
                                 global.coin += 3
+                                break
                             case "octorok":
                                 global.coin += 1
+                                break
                         }
                         this.scene.DisplayRubis()
                         console.log(this.scene.Maze[this.MazeX][this.MazeY].Ennemies)
@@ -339,8 +341,10 @@ export class Player extends Physics.Arcade.Sprite {
                         switch(ennemy[i].type){
                             case "bokoblin":
                                 global.coin += 3
+                                break;
                             case "octorok":
                                 global.coin += 1
+                                break
                         }
                         this.scene.DisplayRubis()
                         this.scene.Maze[this.MazeX][this.MazeY].Ennemies[i].deactivate()

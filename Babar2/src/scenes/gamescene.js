@@ -224,7 +224,7 @@ export class GameScene extends Scene {
         if (this.keys.TAB.isDown) {
             console.log("TAB")
             //this.displayMap();
-            this.displayFullMap()
+            this.displayMap()
         } else {
             if (this.mapGraphics != null) {
                 this.hideMap()
@@ -308,7 +308,7 @@ export class GameScene extends Scene {
             this.mapGraphics = this.add.graphics();
         }
 
-        this.mapGraphics.fillStyle(0x000000, 1);
+        this.mapGraphics.fillStyle(0x000000, 0);
         this.mapGraphics.fillRect(
             (this.cameras.main.width - mapWidth) / 2,
             (this.cameras.main.height - mapHeight) / 2,
@@ -319,18 +319,20 @@ export class GameScene extends Scene {
         for (let y = 0; y < this.MazeHeight; y++) {
             for (let x = 0; x < this.MazeWidth; x++) {
                 if (this.Maze[y][x].visited === true && this.Maze[y][x].wall === false) {
-                    this.mapGraphics.fillStyle(0xff0000, 1);
+                    this.mapGraphics.fillStyle(0xff0000, 0.75);
                 } else if (this.Maze[y][x].discovered === true && this.Maze[y][x].wall === false) {
-                    this.mapGraphics.fillStyle(0x880000, 1);
+                    this.mapGraphics.fillStyle(0x880000, 0.75);
                 } else {
-                    this.mapGraphics.fillStyle(0x000000, 1);
+                    this.mapGraphics.fillStyle(0x000000, 0.75);
                 }
                 const rectX = (this.cameras.main.width - mapWidth) / 2 + x * tileSize;
                 const rectY = (this.cameras.main.height - mapHeight) / 2 + y * tileSize;
                 this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
             }
         }
-        this.mapGraphics.fillStyle(0x00ff00, 1);
+        this.mapGraphics.fillStyle(0xff0000, 0.75);
+        this.mapGraphics.fillRect((this.cameras.main.width - mapWidth )/ 2 + 10 * tileSize, (this.cameras.main.height - mapHeight) / 2 + 9 * tileSize, tileSize, tileSize);
+        this.mapGraphics.fillStyle(0x00ff00, 0.75);
         const rectX = (this.cameras.main.width - mapWidth) / 2 + this.player.MazeX * tileSize;
         const rectY = (this.cameras.main.height - mapHeight) / 2 + this.player.MazeY * tileSize;
         this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
@@ -377,6 +379,8 @@ export class GameScene extends Scene {
                 this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
             }
         }
+        this.mapGraphics.fillStyle(0xff0000, 1);        
+        this.mapGraphics.fillRect(this.cameras.main.width - mapWidth / 2 + 10 * tileSize, this.cameras.main.height - mapHeight / 2 + 10 * tileSize, tileSize, tileSize);
         this.mapGraphics.fillStyle(0x00ff00, 1); 
         const rectX = (this.cameras.main.width - mapWidth) / 2 + this.player.MazeX * tileSize;
         const rectY = (this.cameras.main.height - mapHeight) / 2 + this.player.MazeY * tileSize;
