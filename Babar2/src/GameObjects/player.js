@@ -7,7 +7,7 @@ import {global} from "../main"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 20;
+    velocity = 10;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -31,10 +31,10 @@ export class Player extends Physics.Arcade.Sprite {
         this.getkey = false
         switch(this.weapon){
             case "spear":
-                this.AttackDamage = 10 * (0.4 * (attackBonus + 1))
+                this.AttackDamage = 10 * (0.4 * ((attackBonus)+1))
                 break;
             case "sword":
-                this.AttackDamage = 20 * (0.4 * (attackBonus + 1))
+                this.AttackDamage = 20 * (0.4 * ((attackBonus)+1))
         }
         this.Health = 10 + heartBonus*2
         this.scene.add.existing(this);
@@ -43,54 +43,60 @@ export class Player extends Physics.Arcade.Sprite {
     
 
     move(direction) {
-
+        if(direction.length == 0){
+            this.anims.stop();
+        }
         for(var i = 0 ; i < direction.length;i++){
             switch (direction[i]) {
-                
                 case "up":
                     this.oldDirection = direction
-                    if (this.y > 0 +this.size){
+                    if (this.y > 0 +this.size+30){
                         if(this.actualroom == "water"){
                             this.y -= this.velocity/2;
                         }else {
                             this.y -= this.velocity;
                         }
+                        this.anims.play('walk-up', true);
+
                     }else {
                         this.SwitchRoom(direction[i])
                     }
                     break;
                 case "down":
                     this.oldDirection = direction
-                    if (this.y < 540 -this.size){
+                    if (this.y < 540 -this.size -30){
                         if(this.actualroom == "water"){
                             this.y += this.velocity/2;
                         }else {
                             this.y += this.velocity;
                         }
+                        this.anims.play('walk-down', true);
                     }else {
                         this.SwitchRoom(direction[i])
                     }
                     break;
                 case "left":
                     this.oldDirection = direction
-                    if (this.x > 0 +this.size){
+                    if (this.x > 0 +this.size+30){
                         if(this.actualroom == "water"){
                             this.x -= this.velocity/2;
                         }else {
                             this.x -= this.velocity;
                         }
+                        this.anims.play('walk-left', true);
                     }else {
                         this.SwitchRoom(direction[i])
                     }
-                    break;
+                    break;      
                 case "right":
                     this.oldDirection  = direction
-                    if ( this.x < 960 -this.size){
+                    if ( this.x < 960 -this.size-30){
                         if(this.actualroom == "water"){
                             this.x += this.velocity/2;
                         }else {
                             this.x += this.velocity;
                         }
+                        this.anims.play('walk-right', true);
                     }else {
                         this.SwitchRoom(direction[i])
                         
@@ -355,6 +361,7 @@ export class Player extends Physics.Arcade.Sprite {
 
         return Math.abs(diffAngle) <= coneWidth;
     }
+    
     GetAttacked(amount){
         this.Health = this.Health - amount
         this.UpdateHealth()
@@ -372,14 +379,18 @@ export class Player extends Physics.Arcade.Sprite {
         for(var i = 0 ; i < this.Health/2 ; i++){
             if(life >= 2){
                 var Heart = this.scene.add.image(0+55*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)
+                Heart.setDepth(1000);
                 this.HealthBar.push(Heart)
+                
                 life -=2
             }else if(life == 1){
                 var Heart =this.scene.add.image(0+55*i,2,"MidHeart").setOrigin(0, 0).setScale(0.20)
+                Heart.setDepth(1000);
                 this.HealthBar.push(Heart)
                 life-=1
             }else {
                 var Heart =this.scene.add.image(0+55*i,2,"EmptyHeart").setOrigin(0, 0).setScale(0.20)
+                Heart.setDepth(1000);
                 this.HealthBar.push(Heart)
             }
         }

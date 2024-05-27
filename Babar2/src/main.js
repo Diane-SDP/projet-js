@@ -9,7 +9,7 @@ import { BossScene } from "./scenes/BossScene";
 import Phaser from 'phaser';
 
 export const global = {
-    coin: 5000,
+    coin: 0,
     nbWeaponBonus: 0,
     nbHeartBonus: 0
 };
@@ -19,12 +19,13 @@ var config = {
     width: 960,
     height: 540,
     scene: [
-       
+        
         MenuScene,
         Shop,
         GameScene,
         GameOverScene,
         BossScene
+        
         
     ],
     physics: {

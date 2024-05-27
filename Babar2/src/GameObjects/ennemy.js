@@ -13,7 +13,7 @@ export class Ennemy extends Physics.Arcade.Image {
                 var image = "octorok"
                 var velocity = 2
         }
-        super(scene, Math.floor(Math.random() * 900), Math.floor(Math.random() * 500), image);
+        super(scene, Math.floor(Math.random() * 890)+30, Math.floor(Math.random() * 460)+30, image);
         this.BasicVelocity = velocity
         this.type = type
         this.scene = scene;
@@ -122,10 +122,10 @@ export class Ennemy extends Physics.Arcade.Image {
             let newX = this.x + directionX * this.velocity;
             let newY = this.y + directionY * this.velocity;
     
-            if (newX < 0) newX = 0;
-            if (newX > 960) newX = 960;
-            if (newY < 0) newY = 0;
-            if (newY > 540) newY = 540;
+            if (newX < 0+80) newX = 0+80;
+            if (newX > 960-80) newX = 960-80;
+            if (newY < 0+80) newY = 0+80;
+            if (newY > 540-80) newY = 540-80;
     
             this.x = newX;
             this.y = newY;

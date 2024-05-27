@@ -27,7 +27,7 @@ export class GameScene extends Scene {
         this.load.image('wall', './public/assets/wall.png')
         this.load.image('waterBG', './public/assets/waterBG.png')
         this.load.image('BG', './public/assets/BG.png')
-        this.load.image("player",'./public/assets/player.png')
+        // this.load.image("player",'./public/assets/player.png')
         this.load.image("bokoblin",'./public/assets/bokoblin.png')
         this.load.image("FullHeart",'./public/assets/HearthFull.png')
         this.load.image("MidHeart",'./public/assets/HearthMid.png')
@@ -36,8 +36,11 @@ export class GameScene extends Scene {
         this.load.image("rock",'./public/assets/rock.png')
         this.load.image("key","./public/assets/key.png")
         this.load.image("ganon","./public/assets/ganon.png")
-        this.load.atlas('a-player', './public/assets/spriteSheets/player.png', './src/animations/spritePlayer.json');
-        
+        // this.load.atlas('a-player', './public/assets/spriteSheets/player.png', './src/animations/spritePlayer.json');
+        this.load.spritesheet('player', './public/assets/spriteSheets/player.png', {
+            frameWidth: 120,
+            frameHeight: 126
+        });
 
     }
 
@@ -65,6 +68,34 @@ export class GameScene extends Scene {
 
         this.player = new Player({ scene: this, weapon: this.selectedWeapon, attackBonus: global.nbWeaponBonus, heartBonus: global.nbHeartBonus })
         this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
+
+        this.anims.create({
+            key: 'walk-down',
+            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 9 }),
+            frameRate: 10,
+            repeat: -1
+        });
+    
+        this.anims.create({
+            key: 'walk-left',
+            frames: this.anims.generateFrameNumbers('player', { start: 10, end: 19 }),
+            frameRate: 10,
+            repeat: -1
+        });
+    
+        this.anims.create({
+            key: 'walk-right',
+            frames: this.anims.generateFrameNumbers('player', { start: 30, end: 39 }),
+            frameRate: 10,
+            repeat: -1
+        });
+    
+        this.anims.create({
+            key: 'walk-up',
+            frames: this.anims.generateFrameNumbers('player', { start: 20, end: 29 }),
+            frameRate: 10,
+            repeat: -1
+        });
         
         // this.bokoblin.setScale(0.75)
 
