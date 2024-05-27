@@ -6,7 +6,11 @@ Ce projet est un jeu en JavaScript créé avec Phaser, inspiré par l'univers de
 
 ## Comment exécuter le projet
 
-Pour exécuter le projet, utilisez la commande suivante dans votre terminal:
+Pour exécuter le projet, 
+
+- Clonez ce repo
+- Ouvrez le dossier dans un terminal
+- Utilisez les commandes suivantes :
 
 ```powershelle
 cd .\Babar2\
