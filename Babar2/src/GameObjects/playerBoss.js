@@ -12,7 +12,7 @@ export class Player extends Physics.Arcade.Sprite {
 
 
 
-    constructor({scene}) {
+    constructor({scene, weapon, AttackDamage, Health}) {
 
         super(scene, 960/2, 400, "player");
         this.CanDash = true
@@ -21,19 +21,9 @@ export class Player extends Physics.Arcade.Sprite {
         this.Maze = []
     
         this.bokoblin = null
-        this.weapon = "spear"
-        switch(this.weapon){
-            case "spear":
-                this.AttackDamage = 10*10
-                break;
-            case "sword":
-                this.AttackDamage = 20
-                break;
-            case "master":
-                this.AttackDamage = 1
-                break;
-        }
-        this.Health = 10//10 demi coeurs pour 5 coeurs
+        this.weapon = weapon
+        this.AttackDamage = AttackDamage
+        this.Health = Health
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
     }
@@ -282,7 +272,7 @@ export class Player extends Physics.Arcade.Sprite {
         }
         this.HealthBar= []
         var life = this.Health;
-        for(var i = 0 ; i < 5 ; i++){
+        for(var i = 0 ; i < life ; i++){
             if(life >= 2){
                 var Heart = this.scene.add.image(0+55*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)
                 this.HealthBar.push(Heart)
