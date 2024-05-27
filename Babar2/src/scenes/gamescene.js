@@ -223,8 +223,9 @@ export class GameScene extends Scene {
         }
         if (this.keys.TAB.isDown) {
             console.log("TAB")
-            //this.displayMap();
-            this.displayFullMap()
+            this.displayMap()
+            // Si vous voulez la map en entier dès le départ, avec emplacement des salles spéciales et de la clé :
+            // this.displayFullMap()
         } else {
             if (this.mapGraphics != null) {
                 this.hideMap()

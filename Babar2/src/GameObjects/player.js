@@ -7,7 +7,7 @@ import {global} from "../main"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 40;
+    velocity = 10;
     size = 50;
     MazeX = 0;
     MazeY = 0;
