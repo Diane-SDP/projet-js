@@ -7,7 +7,7 @@ import {global} from "../main"
 
 export class Player extends Physics.Arcade.Sprite {
 
-    velocity = 10;
+    velocity = 20;
     size = 50;
     MazeX = 0;
     MazeY = 0;
@@ -37,6 +37,7 @@ export class Player extends Physics.Arcade.Sprite {
                 this.AttackDamage = 20 * (0.4 * ((attackBonus)+1))
         }
         this.Health = 10 + heartBonus*2
+        this.MaxHealth = this.Health
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
     }
@@ -213,7 +214,7 @@ export class Player extends Physics.Arcade.Sprite {
                 break;
             case "right":
                 if(this.MazeX == 9 && this.MazeY == 9 && this.getkey){
-                    this.scene.scene.start("BossScene")
+                    this.scene.scene.start("boss")
                 }else if(this.MazeX != this.MazeMaxX-1){
                     if(this.Maze[this.MazeY][this.MazeX+1].wall == false){
                         this.x = 0+this.size
@@ -222,7 +223,6 @@ export class Player extends Physics.Arcade.Sprite {
                         this.scene.displayEnnemy(this.MazeX,this.MazeY)
                         this.actualroom = this.Maze[this.MazeY][this.MazeX].special
                         for (let i=0; i<this.scene.walls.length; i++) {
-                            console.log("destroy")
                             this.scene.walls[i].destroy()
                         }
                         this.scene.walls = []

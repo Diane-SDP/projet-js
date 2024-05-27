@@ -10,6 +10,12 @@ export class BossScene extends Scene {
         super('BossScene');
     }
 
+    init(data) {
+        let weapon = data.weapon
+        let attackDamage = data.attack
+        let health = data.health
+        this.player = new Player({ scene: this , weapon: weapon, AttackDamage: attackDamage, Health: health}).setScale(0.75)
+    }
     
     preload() {
         //a enlever apres
@@ -51,7 +57,7 @@ export class BossScene extends Scene {
 
     }
     create(){
-        this.player = new Player({ scene: this }).setScale(0.75);
+        
         this.Ganon = new Ganon({ scene: this }).setScale(2);
         this.cursors = this.input.keyboard.createCursorKeys();
         this.status = ""
