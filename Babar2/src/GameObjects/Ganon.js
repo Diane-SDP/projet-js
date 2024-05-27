@@ -33,6 +33,8 @@ export class Ganon extends Physics.Arcade.Image {
             if (this.BulletGanon){
                 const distance = Phaser.Math.Distance.Between(this.Bullet.x, this.Bullet.y, 480, 400);
                 if (distance < 10) {
+                    this.Bullet.x = 0;
+                    this.Bullet.y = 0
                     this.Bullet.destroy();
                     this.BulletGanon = false
                     Player.GetAttacked(2)

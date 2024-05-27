@@ -29,11 +29,11 @@ export class Shop extends Phaser.Scene {
         this.sword.on('pointerdown', () => this.selectWeapon('sword'));
         this.spear.on('pointerdown', () => this.selectWeapon('spear'));
 
-        const validateButton = this.add.text(this.cameras.main.width / 2, 3 * this.cameras.main.height / 4, 'CHOOSE', { fontSize: '32px', fill: '#FFF' })
+        const validateButton = this.add.text(this.cameras.main.width / 2, 3 * this.cameras.main.height / 4, 'Selectionnez', { fontSize: '32px', fill: '#FFF' })
             .setOrigin(0.5)
             .setInteractive();
         validateButton.on('pointerdown', () => this.validateSelection());
-        this.coinsText = this.add.text(this.cameras.main.width - 20, 20, `Coins: ${global.coin}`, { fontSize: '24px', fill: '#FFF' })
+        this.coinsText = this.add.text(this.cameras.main.width - 20, 20, `Rubis: ${global.coin}`, { fontSize: '24px', fill: '#FFF' })
             .setOrigin(1, 0)
         this.updateCoinsText()
         this.UpgradeButtons()
@@ -110,7 +110,7 @@ export class Shop extends Phaser.Scene {
     updateUpgrades() {
         const weaponUpgradeCost = 25 + 5 * global.nbWeaponBonus
 
-        this.upgradeWeapon.setText(`Upgrade Attack (${weaponUpgradeCost} coins) - Level ${global.nbWeaponBonus}/5`)
+        this.upgradeWeapon.setText(`Ameliorez votre attaque : (${weaponUpgradeCost} rubis) - Level ${global.nbWeaponBonus}/5`)
         if (global.nbWeaponBonus >= 5 || global.coin < weaponUpgradeCost) {
             this.upgradeWeapon.disableInteractive().setStyle({ fill: '#888' })
         } else {
@@ -118,7 +118,7 @@ export class Shop extends Phaser.Scene {
         }
 
         const heartUpgradeCost = 30;
-        this.upgradeHeart.setText(`Add Heart (${heartUpgradeCost} coins) - Level ${global.nbHeartBonus}/5`)
+        this.upgradeHeart.setText(`Ajoutez des coeurs (${heartUpgradeCost} rubis) - Level ${global.nbHeartBonus}/5`)
         if (global.nbHeartBonus >= 5 || global.coin < heartUpgradeCost) {
             this.upgradeHeart.disableInteractive().setStyle({ fill: '#888' })
         } else {
@@ -128,7 +128,7 @@ export class Shop extends Phaser.Scene {
     }
 
     updateCoinsText() {
-        this.coinsText.setText(`Coins: ${global.coin}`);
+        this.coinsText.setText(`Rubis: ${global.coin}`);
     }
 
 }

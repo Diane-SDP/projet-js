@@ -390,12 +390,29 @@ export class GameScene extends Scene {
         this.rubis= []
         const style = { 
             fontFamily: '"BOTW"',
-            fontSize: '25px',
+            fontSize: '70px',
             fill: '#0f0'
         };
-        var rubisimage = this.add.image(700,5,"rubis").setOrigin(0, 0).setScale(0.1).setDepth(1000)
-        var nbrubis = this.add.text(740,5,global.coin,style)
-        this.rubis.push(rubisimage)
-        this.rubis.push(nbrubis)
+
+        if(global.coin >= 100){
+            var rubisimage = this.add.image(800-30,5,"rubis").setOrigin(0, 0).setScale(0.1).setDepth(1000)
+            console.log("nb coin "+global.coin)
+            var nbrubis = this.add.text(875-30,5,global.coin,style).setOrigin(0,0).setDepth(1000)
+            this.rubis.push(rubisimage)
+            this.rubis.push(nbrubis)
+        }else if(global.coin >= 1000){
+            var rubisimage = this.add.image(800-100,5,"rubis").setOrigin(0, 0).setScale(0.1).setDepth(1000)
+            console.log("nb coin "+global.coin)
+            var nbrubis = this.add.text(875-100,5,global.coin,style).setOrigin(0,0).setDepth(1000)
+            this.rubis.push(rubisimage)
+            this.rubis.push(nbrubis)
+        }else {
+            var rubisimage = this.add.image(800,5,"rubis").setOrigin(0, 0).setScale(0.1).setDepth(1000)
+            console.log("nb coin "+global.coin)
+            var nbrubis = this.add.text(875,5,global.coin,style).setOrigin(0,0).setDepth(1000)
+            this.rubis.push(rubisimage)
+            this.rubis.push(nbrubis)
+        }
+
     }
 }
