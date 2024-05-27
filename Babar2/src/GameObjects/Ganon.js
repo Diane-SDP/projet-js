@@ -32,7 +32,7 @@ export class Ganon extends Physics.Arcade.Image {
         if(this.Bullet != null){
             if (this.BulletGanon){
                 const distance = Phaser.Math.Distance.Between(this.Bullet.x, this.Bullet.y, 480, 400);
-                if (distance < 40) {
+                if (distance < 10) {
                     this.Bullet.destroy();
                     this.BulletGanon = false
                     Player.GetAttacked(2)
@@ -225,7 +225,7 @@ export class Ganon extends Physics.Arcade.Image {
                     }, 2000);
                     break;
                 case 3:
-                    this.scene.scene.start("menu")
+                    this.scene.scene.start("Credits")
                     break;
             }
         }

@@ -14,6 +14,7 @@ export class GameScene extends Scene {
     Maze = []
     MazeHeight = 10
     MazeWidth = 10
+    rubis = []
     constructor() {
         super('game');
     }
@@ -35,7 +36,7 @@ export class GameScene extends Scene {
         this.load.image("octorok",'./public/assets/OctoRok.png')
         this.load.image("rock",'./public/assets/rock.png')
         this.load.image("key","./public/assets/key.png")
-        this.load.image("ganon","./public/assets/ganon.png")
+        this.load.image("rubis","./public/assets/rubis.png")
         // this.load.atlas('a-player', './public/assets/spriteSheets/player.png', './src/animations/spritePlayer.json');
         this.load.spritesheet('player', './public/assets/spriteSheets/player.png', {
             frameWidth: 120,
@@ -68,7 +69,6 @@ export class GameScene extends Scene {
 
         this.player = new Player({ scene: this, weapon: this.selectedWeapon, attackBonus: global.nbWeaponBonus, heartBonus: global.nbHeartBonus })
         this.bokoblin = new Ennemy({scene: this}).setScale(0.75)
-
         this.anims.create({
             key: 'walk-down',
             frames: this.anims.generateFrameNumbers('player', { start: 0, end: 9 }),
@@ -152,7 +152,7 @@ export class GameScene extends Scene {
         }
 
         this.checkWalls()
-
+        this.DisplayRubis()
     }
 
     setVisitedCase(x, y) {
@@ -383,5 +383,19 @@ export class GameScene extends Scene {
         this.mapGraphics.fillRect(rectX, rectY, tileSize, tileSize);
     }
 
-    
+    DisplayRubis(){
+        for(var i = 0 ; i < this.rubis.length ; i++){
+            this.rubis[i].destroy()
+        }
+        this.rubis= []
+        const style = { 
+            fontFamily: '"BOTW"',
+            fontSize: '25px',
+            fill: '#0f0'
+        };
+        var rubisimage = this.add.image(700,5,"rubis").setOrigin(0, 0).setScale(0.1).setDepth(1000)
+        var nbrubis = this.add.text(740,5,global.coin,style)
+        this.rubis.push(rubisimage)
+        this.rubis.push(nbrubis)
+    }
 }

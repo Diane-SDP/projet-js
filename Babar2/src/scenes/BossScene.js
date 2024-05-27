@@ -19,17 +19,22 @@ export class BossScene extends Scene {
     
     preload() {
         //a enlever apres
-        this.load.image('background', './public/assets/wallpaper.jpg');
-        this.load.image("player",'./public/assets/player.png')
-        this.load.image("bokoblin",'./public/assets/bokoblin.png')
-        this.load.image("FullHeart",'./public/assets/HearthFull.png')
-        this.load.image("MidHeart",'./public/assets/HearthMid.png')
-        this.load.image("EmptyHeart",'./public/assets/HearthEmpty.png')
-        this.load.image("octorok",'./public/assets/OctoRok.png')
-        this.load.image("rock",'./public/assets/rock.png')
-        this.load.image("key","./public/assets/key.png")
-        this.load.atlas('a-player', './public/assets/spriteSheets/player.png', './src/animations/spritePlayer.json');
 
+
+        // this.load.image('background', './public/assets/wallpaper.jpg');
+        // this.load.image("bokoblin",'./public/assets/bokoblin.png')
+        // this.load.image("FullHeart",'./public/assets/HearthFull.png')
+        // this.load.image("MidHeart",'./public/assets/HearthMid.png')
+        // this.load.image("EmptyHeart",'./public/assets/HearthEmpty.png')
+        // this.load.image("octorok",'./public/assets/OctoRok.png')
+        // this.load.image("rock",'./public/assets/rock.png')
+        // this.load.image("key","./public/assets/key.png")
+        // this.load.spritesheet('player', './public/assets/spriteSheets/player.png', {
+        //     frameWidth: 120,
+        //     frameHeight: 126
+        // });
+
+        
         //a garder
         this.load.image("ganon1","./public/assets/Ganon/ganon1.png")
         this.load.image("ganon1CALL","./public/assets/Ganon/ganon1CALL.png")
@@ -118,6 +123,7 @@ export class BossScene extends Scene {
     
                 }
             } 
+            
             this.player.update();
             var direction = []
             if (this.cursors.up.isDown || this.keys.Z.isDown) {
