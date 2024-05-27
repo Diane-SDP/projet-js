@@ -8,17 +8,22 @@ export class GameOverScene extends Scene {
     }
     create(){
         const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
-        const style = { 
+        var style = { 
             fontFamily: '"BOTW"',
             fontSize: '32px',
             fill: '#f00'
         };
 
         const GameOver = this.add.text(screenCenterX, 250, 'Perdu ! ', style).setOrigin(0.5);
+        style = { 
+            fontFamily: '"BOTW"',
+            fontSize: '32px',
+            fill: '#bbb'
+        };
         const Retry = this.add.text(screenCenterX, 350, 'Recommencer', style).setOrigin(0.5);
         Retry.setInteractive();
-        Retry.on('pointerover', () => { Retry.setFill("#0f0") });
-        Retry.on('pointerout', () => { Retry.setFill("#f00") });
+        Retry.on('pointerover', () => { Retry.setFill("#f00") });
+        Retry.on('pointerout', () => { Retry.setFill("#bbb") });
         Retry.on('pointerdown', () => this.scene.start("shop"))
     }
 }

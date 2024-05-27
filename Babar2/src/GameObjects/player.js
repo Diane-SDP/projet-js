@@ -1,5 +1,6 @@
 import { GameObjects,Physics } from "phaser";
 import {GameOverScene} from "../scenes/gameoverscene"
+import{BossScene} from "../scenes/BossScene"
 import {global} from "../main"
 
 
@@ -30,10 +31,10 @@ export class Player extends Physics.Arcade.Sprite {
         this.getkey = false
         switch(this.weapon){
             case "spear":
-                this.AttackDamage = 10 * (0.4 * (attackBonus + 1))
+                this.AttackDamage = 10 * (0.4 * ((attackBonus))+1)
                 break;
             case "sword":
-                this.AttackDamage = 20 * (0.4 * (attackBonus + 1))
+                this.AttackDamage = 20 * (0.4 * ((attackBonus))+1)
         }
         this.Health = 10 + heartBonus*2
         this.MaxHealth = this.Health
@@ -43,54 +44,60 @@ export class Player extends Physics.Arcade.Sprite {
     
 
     move(direction) {
-
+        if(direction.length == 0){
+            this.anims.stop();
+        }
         for(var i = 0 ; i < direction.length;i++){
             switch (direction[i]) {
-                
                 case "up":
                     this.oldDirection = direction
-                    if (this.y > 0 +this.size){
+                    if (this.y > 0 +this.size+30){
                         if(this.actualroom == "water"){
                             this.y -= this.velocity/2;
                         }else {
                             this.y -= this.velocity;
                         }
+                        this.anims.play('walk-up', true);
+
                     }else {
                         this.SwitchRoom(direction[i])
                     }
                     break;
                 case "down":
                     this.oldDirection = direction
-                    if (this.y < 540 -this.size){
+                    if (this.y < 540 -this.size -30){
                         if(this.actualroom == "water"){
                             this.y += this.velocity/2;
                         }else {
                             this.y += this.velocity;
                         }
+                        this.anims.play('walk-down', true);
                     }else {
                         this.SwitchRoom(direction[i])
                     }
                     break;
                 case "left":
                     this.oldDirection = direction
-                    if (this.x > 0 +this.size){
+                    if (this.x > 0 +this.size+30){
                         if(this.actualroom == "water"){
                             this.x -= this.velocity/2;
                         }else {
                             this.x -= this.velocity;
                         }
+                        this.anims.play('walk-left', true);
                     }else {
                         this.SwitchRoom(direction[i])
                     }
-                    break;
+                    break;      
                 case "right":
                     this.oldDirection  = direction
-                    if ( this.x < 960 -this.size){
+                    if ( this.x < 960 -this.size-30){
                         if(this.actualroom == "water"){
                             this.x += this.velocity/2;
                         }else {
                             this.x += this.velocity;
                         }
+                        this.anims.play('walk-right', true);
                     }else {
                         this.SwitchRoom(direction[i])
                         
@@ -206,7 +213,7 @@ export class Player extends Physics.Arcade.Sprite {
                 break;
             case "right":
                 if(this.MazeX == 9 && this.MazeY == 9 && this.getkey){
-                    this.scene.scene.start('BossScene', { weapon: this.weapon , health: this.MaxHealth, attack: this.AttackDamage})
+                    this.scene.scene.start("boss")
                 }else if(this.MazeX != this.MazeMaxX-1){
                     if(this.Maze[this.MazeY][this.MazeX+1].wall == false){
                         this.x = 0+this.size
@@ -357,6 +364,7 @@ export class Player extends Physics.Arcade.Sprite {
 
         return Math.abs(diffAngle) <= coneWidth;
     }
+    
     GetAttacked(amount){
         this.Health = this.Health - amount
         this.UpdateHealth()
@@ -374,17 +382,21 @@ export class Player extends Physics.Arcade.Sprite {
         console.log(life)
         for(var i = 0 ; i < this.MaxHealth ; i+=2){
             if(life >= 2){
-                var Heart = this.scene.add.image(0+22.5*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)
+                var Heart = this.scene.add.image(0+23*i,2,"FullHeart").setOrigin(0, 0).setScale(0.20)
+                Heart.setDepth(1000);
                 this.HealthBar.push(Heart)
+                
                 life -=2
             }else if(life == 1){
-                var Heart =this.scene.add.image(0+22.5*i,2,"MidHeart").setOrigin(0, 0).setScale(0.20)
+                var Heart =this.scene.add.image(0+23*i,2,"MidHeart").setOrigin(0, 0).setScale(0.20)
+                Heart.setDepth(1000);
                 this.HealthBar.push(Heart)
                 life--
             }else {
-                 var Heart =this.scene.add.image(0+22.5*i,2,"EmptyHeart").setOrigin(0, 0).setScale(0.20)
-                 this.HealthBar.push(Heart)
-             }
+                var Heart =this.scene.add.image(0+23*i,2,"EmptyHeart").setOrigin(0, 0).setScale(0.20)
+                Heart.setDepth(1000);
+                this.HealthBar.push(Heart)
+            }
         }
     }
 }

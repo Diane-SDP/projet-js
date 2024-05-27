@@ -216,6 +216,8 @@ export class Ganon extends Physics.Arcade.Image {
                     this.phase = 3;
                     this.Defense = 5
                     Player.weapon = Player.selectedWeapon
+                    this.setTexture("GanonAzad")
+                    console.log("Phase 3 ou quoi la")
                     setTimeout(() => {
                         this.invincibility = false
                         

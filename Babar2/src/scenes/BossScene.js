@@ -39,6 +39,9 @@ export class BossScene extends Scene {
 
         this.load.image("ganon2CALL","./public/assets/Ganon/ganon2CALL.png")
         this.load.image("ganon2GROUND","./public/assets/Ganon/ganon2Ground.png")
+
+        this.load.image("GanonAzad","./public/assets/Ganon/GanonFinal.png")
+
         // this.load.image("ganon2SHIELD","./public/assets/Ganon/ganon2SHIELD.png")
         // this.load.image("ganon2START","./public/assets/Ganon/ganon2START.png")
 
@@ -50,6 +53,7 @@ export class BossScene extends Scene {
         this.load.image("bullet5","./public/assets/Ganon/Bullet/Bullet5.png")
         this.load.image("bullet6","./public/assets/Ganon/Bullet/Bullet6.png")
         this.load.image("bullet7","./public/assets/Ganon/Bullet/Bullet7.png")
+
 
     }
     create(){

@@ -26,12 +26,12 @@ export class MenuScene extends Scene {
         const style = { 
             fontFamily: '"BOTW"',
             fontSize: '32px',
-            fill: '#f00'
+            fill: '#bbb'
         };
         const startButton = this.add.text(screenCenterX, screenCenterY, 'Jouer', style).setOrigin(0.5);
         startButton.setInteractive();
-        startButton.on('pointerover', () => { startButton.setFill("#0f0") });
-        startButton.on('pointerout', () => { startButton.setFill("#f00") });
+        startButton.on('pointerover', () => { startButton.setFill("#f00") });
+        startButton.on('pointerout', () => { startButton.setFill("#bbb") });
         startButton.on('pointerdown', () => this.scene.start("shop"))
         // this.scene.start("game");
     }
