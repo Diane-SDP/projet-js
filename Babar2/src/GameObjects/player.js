@@ -40,6 +40,7 @@ export class Player extends Physics.Arcade.Sprite {
         this.MaxHealth = this.Health
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
+        
     }
     
 
